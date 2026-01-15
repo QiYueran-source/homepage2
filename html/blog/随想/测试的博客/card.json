@@ -1,0 +1,8 @@
+{
+    "title": "测试博客文章",
+    "summary": "这是一个测试博客文章，用于验证生成系统是否正常工作",
+    "date": "2025-01-25",
+    "image": "https://picsum.photos/seed/test-blog/800/500",
+    "status": "published",
+    "tags": ["测试", "博客"]
+}

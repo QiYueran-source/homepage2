@@ -1,0 +1,12 @@
+{
+    "id": "blockchain-voting",
+    "title": "区块链投票平台",
+    "summary": "去中心化的安全投票系统，确保选举公平性和结果不可篡改",
+    "technologies": ["Solidity", "Web3.js", "React", "Node.js", "Ethereum"],
+    "image": "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+    "github_url": "https://github.com/username/blockchain-voting",
+    "demo_url": "https://voting.example.com",
+    "status": "in-development",
+    "date": "2025-01",
+    "category": "区块链"
+}

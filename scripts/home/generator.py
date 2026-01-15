@@ -75,10 +75,26 @@ def generate_home_html():
     from .blog_preview import generate_blog_preview_html
     blog_preview_html = generate_blog_preview_html()
 
+    # 调用项目预览模块
+    from scripts.sections.project.generator import generate_projects_preview_html
+    projects_preview_html = generate_projects_preview_html()
+
+    # 调用文档预览模块
+    from scripts.sections.docs.generator import generate_docs_preview_html
+    docs_preview_html = generate_docs_preview_html()
+
+    # 调用技术栈预览模块
+    from scripts.sections.stack.generator import generate_stack_preview_html
+    stack_preview_html = generate_stack_preview_html()
+
+    # 调用联系方式预览模块
+    from scripts.sections.contact.generator import generate_contact_preview_html
+    contact_preview_html = generate_contact_preview_html()
+
     footer_html = generate_footer_html(env, config)
 
     # 组合内容HTML
-    content_html = hero_html + resume_preview_html + blog_preview_html
+    content_html = hero_html + resume_preview_html + blog_preview_html + projects_preview_html + docs_preview_html + stack_preview_html + contact_preview_html
 
     # 渲染完整页面
     base_template = env.get_template('base.html')

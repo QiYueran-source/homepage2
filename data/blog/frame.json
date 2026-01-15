@@ -1,34 +1,13 @@
 {
-    "nav_title": "个人博客",
+    "nav_title": "博客",
     "page_title": "个人博客 - 齐悦然",
-    "breadcrumbs": [
-        {"text": "首页", "href": "../home.html"},
-        {"text": "个人博客", "href": "#"}
-    ],
-    "sidebar": {
-        "categories": [
-            {
-                "id": "经济与金融",
-                "name": "经济与金融",
-                "icon": "fa-chart-line",
-                "count": 5,
-                "description": "投资理财、经济学思考"
-            },
-            {
-                "id": "随想",
-                "name": "随想录",
-                "icon": "fa-brain",
-                "count": 8,
-                "description": "生活感悟、个人思考"
-            },
-            {
-                "id": "技术分享",
-                "name": "技术分享",
-                "icon": "fa-code",
-                "count": 12,
-                "description": "编程技术、开发经验"
+    "nav_buttons": [
+        {
+            "text": "返回首页",
+            "href": "../../home.html",
+            "icon": "fa-arrow-left",
+            "class": "back-btn"
             }
-        ]
-    },
-    "footer_extra": "个人博客 - 记录技术学习、生活感悟与投资思考"
+    ],
+    "footer_extra": "博客模块 - 记录技术学习、生活感悟与投资思考"
 }

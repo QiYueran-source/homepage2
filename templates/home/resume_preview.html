@@ -1,6 +1,6 @@
 <!-- 简历预览区域 -->
-<section id="resume" class="py-20 px-4 md:px-8 bg-apple-white">
-    <div class="container mx-auto max-w-4xl">
+<section id="resume" class="py-24 px-4 md:px-8 bg-apple-white">
+    <div class="container mx-auto max-w-6xl">
         <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center reveal-element">
             {{ title }}
         </h2>
@@ -9,45 +9,45 @@
         </p>
 
         <!-- 核心信息卡片网格 -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 mb-16">
             <!-- 教育背景 -->
-            <div class="card-hover bg-apple-card-gradient rounded-xl p-6 reveal-element">
-                <div class="text-apple-hover mb-3">
-                    <i class="fa-solid fa-graduation-cap text-2xl"></i>
+            <div class="card-hover bg-apple-card-gradient rounded-xl p-16 reveal-element">
+                <div class="text-apple-hover mb-4">
+                    <i class="fa-solid fa-graduation-cap text-3xl"></i>
                 </div>
-                <h3 class="font-semibold mb-2">教育背景</h3>
-                <p class="text-apple-gray text-sm">{{ education }}</p>
+                <h3 class="text-lg font-semibold mb-3">教育背景</h3>
+                <p class="text-apple-gray text-base leading-relaxed">{{ education }}</p>
             </div>
 
             <!-- 技术栈 -->
-            <div class="card-hover bg-apple-card-gradient rounded-xl p-6 reveal-element" data-sr-delay="100">
-                <div class="text-apple-hover mb-3">
-                    <i class="fa-solid fa-code text-2xl"></i>
+            <div class="card-hover bg-apple-card-gradient rounded-xl p-16 reveal-element" data-sr-delay="100">
+                <div class="text-apple-hover mb-4">
+                    <i class="fa-solid fa-code text-3xl"></i>
                 </div>
-                <h3 class="font-semibold mb-2">技术栈</h3>
-                <p class="text-apple-gray text-sm">{{ stack }}</p>
+                <h3 class="text-lg font-semibold mb-3">技术栈</h3>
+                <p class="text-apple-gray text-base leading-relaxed">{{ stack }}</p>
             </div>
 
             <!-- 求职意向 -->
-            <div class="card-hover bg-apple-card-gradient rounded-xl p-6 reveal-element md:col-span-2 lg:col-span-1" data-sr-delay="200">
-                <div class="text-apple-hover mb-3">
-                    <i class="fa-solid fa-briefcase text-2xl"></i>
+            <div class="card-hover bg-apple-card-gradient rounded-xl p-16 reveal-element md:col-span-2 lg:col-span-1" data-sr-delay="200">
+                <div class="text-apple-hover mb-4">
+                    <i class="fa-solid fa-briefcase text-3xl"></i>
                 </div>
-                <h3 class="font-semibold mb-2">求职意向</h3>
-                <p class="text-apple-gray text-sm">{{ expectation }}</p>
+                <h3 class="text-lg font-semibold mb-3">求职意向</h3>
+                <p class="text-apple-gray text-base leading-relaxed">{{ expectation }}</p>
             </div>
         </div>
 
         <!-- 代表项目 -->
-        <div class="mb-12">
-            <h3 class="text-xl font-semibold mb-6 text-center reveal-element" data-sr-delay="300">代表项目</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="mb-16">
+            <h3 class="text-2xl font-semibold mb-8 text-center reveal-element" data-sr-delay="300">代表项目</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
                 {% for project in projects %}
-                <div class="card-hover bg-apple-card-gradient rounded-xl p-6 reveal-element" data-sr-delay="{{ loop.index * 100 + 400 }}">
-                    <div class="text-apple-hover mb-3">
-                        <i class="fa-solid fa-project-diagram text-xl"></i>
+                <div class="card-hover bg-apple-card-gradient rounded-xl p-16 reveal-element" data-sr-delay="{{ loop.index * 100 + 400 }}">
+                    <div class="text-apple-hover mb-4">
+                        <i class="fa-solid fa-project-diagram text-2xl"></i>
                     </div>
-                    <p class="text-apple-gray">{{ project }}</p>
+                    <p class="text-apple-gray text-base leading-relaxed">{{ project }}</p>
                 </div>
                 {% endfor %}
             </div>

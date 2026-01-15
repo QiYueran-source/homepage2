@@ -1,0 +1,15 @@
+{
+    "python": ["基本使用","面向对象","高级特性","异步编程"],
+    "polars": ["数据处理"],
+    "plotly": ["数据可视化"],
+    "scikit-learn": ["机器学习"],
+    "pytorch": ["深度学习"],
+    "sb3": ["强化学习"],
+    "streamlit": ["Web开发"],
+    "flask": ["Web开发"],
+    "redis": ["缓存"],
+    "mysql": ["数据库"],
+    "postgresql": ["数据库"],
+    "git": ["版本控制"],
+    "docker": ["容器化"]
+}

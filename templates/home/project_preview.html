@@ -1,0 +1,61 @@
+<!-- 项目预览区域 -->
+<section id="projects" class="py-20 px-4 md:px-8 bg-apple-lightgray">
+    <div class="container mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-16 text-center reveal-element">{{ title }}</h2>
+
+        <!-- 项目展示区域 -->
+        <div class="reveal-element" data-sr-delay="200">
+            <h3 class="text-2xl font-semibold mb-12 text-center">最新项目</h3>
+
+            <!-- 桌面端：网格布局 -->
+            <div class="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {% for project in projects %}
+                {% set delay = loop.index * 200 %}
+                {% set card = project %}
+                {% include 'components/card.html' %}
+                {% endfor %}
+            </div>
+
+            <!-- 移动端：横向滑动布局 -->
+            <div class="md:hidden">
+                <div class="horizontal-scroll-container" data-category="projects">
+                    <div class="horizontal-scroll-content">
+                        {% for project in projects %}
+                        {% set delay = loop.index * 200 %}
+                        {% set card = project %}
+                        <div class="horizontal-scroll-item">
+                            {% include 'components/card.html' %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- 滑动指示器 -->
+                <div class="scroll-indicator mt-4">
+                    <div class="scroll-dots">
+                        {% for project in projects %}
+                        <span class="scroll-dot {{ 'active' if loop.first else '' }}"
+                              data-slide="{{ loop.index }}"
+                              data-category="projects"></span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- 查看更多链接 -->
+            <div class="text-center mt-8">
+                <a href="project/index.html"
+                   class="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors">
+                    <span>
+                        {% if has_more %}
+                            查看全部 {{ total_count }} 个项目
+                        {% else %}
+                            查看{{ total_count }}个项目
+                        {% endif %}
+                    </span>
+                    <i class="fa-solid fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

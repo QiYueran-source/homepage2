@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>价值投资策略：寻找被低估的珍珠 - 个人博客</title>
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome图标 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- 引入ScrollReveal实现滚动渐显动画 -->
+    <script src="https://unpkg.com/scrollreveal@4.0.9/dist/scrollreveal.min.js"></script>
+
+    <!-- 自定义Tailwind配置（苹果官网配色） -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        apple: {
+                            black: '#1D1D1F',
+                            white: '#FFFFFF',
+                            gray: '#86868B',
+                            lightgray: '#F5F5F7',
+                            hover: '#0071E3'
+                        }
+                    },
+                    fontFamily: {
+                        sf: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- 自定义样式 -->
+    <style type="text/tailwindcss">
+        /* 文章内容样式 */
+        .article-content {
+            line-height: 1.8;
+        }
+        .article-content h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 2rem 0 1rem 0;
+            color: #1D1D1F;
+        }
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 1.5rem 0 1rem 0;
+            color: #1D1D1F;
+        }
+        .article-content h3 {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin: 1.25rem 0 0.75rem 0;
+            color: #1D1D1F;
+        }
+        .article-content p {
+            margin: 1rem 0;
+            color: #333;
+        }
+        .article-content ul, .article-content ol {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+        .article-content li {
+            margin: 0.5rem 0;
+        }
+        .article-content code {
+            background: #f5f5f5;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9em;
+        }
+        .article-content pre {
+            background: #f8f8fa;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        .article-content blockquote {
+            border-left: 4px solid #0071E3;
+            padding-left: 1rem;
+            margin: 1rem 0;
+            color: #666;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body class="font-sf bg-apple-lightgray text-apple-black">
+    <!-- 导航栏 -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 md:px-8 py-4">
+            <div class="flex items-center justify-between">
+                <a href="../../../home.html" class="text-apple-hover hover:text-[#0077ED] flex items-center transition-colors">
+                    <i class="fa-solid fa-home mr-2"></i>
+                    首页
+                </a>
+
+                <div class="flex items-center space-x-4">
+                    <a href="../经济与金融.html" class="text-apple-hover hover:text-[#0077ED] flex items-center transition-colors">
+                        <i class="fa-solid fa-arrow-left mr-2"></i>
+                        经济与金融
+                    </a>
+                    <span class="text-apple-gray text-sm hidden md:block">
+                        经济与金融 · 2025-01-18
+                    </span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 文章容器 -->
+    <div class="container mx-auto px-4 md:px-8 py-8 max-w-4xl">
+
+        <!-- 文章头部 -->
+        <header class="mb-8">
+            <!-- 分类和日期 -->
+            <div class="flex items-center gap-4 text-sm text-apple-gray mb-4">
+                <span class="bg-apple-lightgray px-3 py-1 rounded-full">经济与金融</span>
+                <span>2025-01-18</span>
+            </div>
+
+            <!-- 文章标题 -->
+            <h1 class="text-3xl md:text-4xl font-bold text-apple-black mb-4 leading-tight">
+                价值投资策略：寻找被低估的珍珠
+            </h1>
+
+            <!-- 文章摘要 -->
+            <p class="text-lg text-apple-gray leading-relaxed">
+                深入剖析巴菲特价值投资理念，学习如何识别被市场低估的优质企业...
+            </p>
+
+            <!-- 标签 -->
+            <div class="flex flex-wrap gap-2 mt-4">
+                <span class="bg-apple-lightgray text-apple-gray text-sm px-3 py-1 rounded-full">
+                    <i class="fa-solid fa-tag mr-1"></i>价值投资
+                </span>
+                <span class="bg-apple-lightgray text-apple-gray text-sm px-3 py-1 rounded-full">
+                    <i class="fa-solid fa-tag mr-1"></i>巴菲特
+                </span>
+                <span class="bg-apple-lightgray text-apple-gray text-sm px-3 py-1 rounded-full">
+                    <i class="fa-solid fa-tag mr-1"></i>基本面分析
+                </span>
+                <span class="bg-apple-lightgray text-apple-gray text-sm px-3 py-1 rounded-full">
+                    <i class="fa-solid fa-tag mr-1"></i>长期投资
+                </span>
+            </div>
+        </header>
+
+        <!-- 文章内容 -->
+        <article class="bg-white rounded-xl shadow-sm p-8 md:p-12 article-content">
+            <h1 id="_1">价值投资策略：寻找被低估的珍珠</h1>
+<h2 id="_2">引言</h2>
+<p>价值投资是由本杰明·格雷厄姆和沃伦·巴菲特发展起来的投资哲学，其核心思想是寻找市场价格低于其内在价值的资产。</p>
+<h2 id="_3">核心原则</h2>
+<h3 id="1">1. 安全边际</h3>
+<p>以显著低于内在价值的价格买入，提供风险缓冲。</p>
+<h3 id="2">2. 能力圈</h3>
+<p>只投资自己真正了解的企业和行业。</p>
+<h3 id="3">3. 长期持有</h3>
+<p>耐心等待市场认识到公司的真正价值。</p>
+<h2 id="_4">价值投资指标</h2>
+<h3 id="_5">基本面分析</h3>
+<ul>
+<li><strong>市盈率 (P/E)</strong>: 股价相对每股收益的比率</li>
+<li><strong>市净率 (P/B)</strong>: 股价相对每股净资产的比率</li>
+<li><strong>股息收益率</strong>: 年度股息除以当前股价</li>
+</ul>
+<h3 id="_6">财务健康检查</h3>
+<ul>
+<li>债务水平</li>
+<li>现金流稳定性</li>
+<li>竞争优势（经济护城河）</li>
+</ul>
+<h2 id="_7">实战案例</h2>
+<h3 id="_8">可口可乐的内在价值</h3>
+<p>巴菲特在1988年开始买入可口可乐，当时市值为150亿美元。如今该公司市值超过2000亿美元。</p>
+<h3 id="_9">关键成功因素</h3>
+<ol>
+<li>强大的品牌认知度</li>
+<li>稳定的现金流</li>
+<li>优秀的管理层</li>
+<li>合理的估值</li>
+</ol>
+<h2 id="_10">风险管理</h2>
+<h3 id="_11">避免价值陷阱</h3>
+<ul>
+<li>区分暂时低估 vs. 基本面恶化</li>
+<li>关注行业趋势和竞争格局</li>
+<li>设置止损机制</li>
+</ul>
+<h3 id="_12">心理因素</h3>
+<ul>
+<li>克服市场短期波动带来的焦虑</li>
+<li>坚持长期投资理念</li>
+<li>避免羊群效应</li>
+</ul>
+<h2 id="_13">总结</h2>
+<p>价值投资不是寻找便宜货，而是寻找物超所值的投资机会。通过深入的基本面分析和长期持有策略，投资者可以在风险可控的前提下获得可持续的超额收益。</p>
+        </article>
+
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // 滚动渐显动画
+        ScrollReveal().reveal('.reveal-element');
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

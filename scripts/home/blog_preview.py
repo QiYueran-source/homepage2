@@ -40,9 +40,14 @@ def prepare_card_data(card_data, article_path):
     """准备卡片数据，处理路径"""
     card = card_data.copy()
 
-    # 处理图片路径
+    # 处理图片路径 - 指向复制后的图片位置
     if card.get('image'):
-        card['image'] = f"data/blog/{article_path}/{card['image']}"
+        if card['image'].startswith('http'):
+            # 如果是URL，直接使用
+            card['image'] = card['image']
+        else:
+            # 如果是本地文件，指向复制后的位置
+            card['image'] = f"blog/{article_path}/{card['image']}"
 
     # 生成内容页面URL
     card['url'] = f"blog/{article_path}/content.html"
@@ -52,25 +57,38 @@ def prepare_card_data(card_data, article_path):
 
     return card
 
-def get_featured_cards_for_category(blog_config, category_id):
-    """获取指定分类的代表性文章卡片"""
-    represent = blog_config.get('represent', {})
-    featured_articles = represent.get(category_id, [])
+
+def get_all_cards_for_category(category_id, limit=3):
+    """自动扫描并获取指定分类下的文章卡片（限制数量用于预览）"""
+    root_dir = Path(__file__).parent.parent.parent
+    blog_dir = root_dir / "data" / "blog" / category_id
 
     cards = []
-    for article_name in featured_articles[:3]:  # 最多3个
-        # 构建文章路径
-        article_path = f"{category_id}/{article_name}"
-        card_file = Path(__file__).parent.parent.parent / "data" / "blog" / category_id / article_name / "card.json"
 
-        if card_file.exists():
-            card_data = load_json_file(card_file)
-            if card_data:
-                # 准备卡片数据
-                prepared_card = prepare_card_data(card_data, article_path)
-                cards.append(prepared_card)
+    if blog_dir.exists():
+        # 扫描所有子目录（文章）
+        for article_dir in blog_dir.iterdir():
+            if article_dir.is_dir():
+                card_file = article_dir / "card.json"
+                if card_file.exists():
+                    card_data = load_json_file(card_file)
+                    if card_data and card_data.get('status') == 'published':
+                        # 构建文章路径
+                        article_path = f"{category_id}/{article_dir.name}"
+                        # 准备卡片数据
+                        prepared_card = prepare_card_data(card_data, article_path)
+                        cards.append(prepared_card)
 
-    return cards
+    # 按日期排序，最新的在前
+    cards.sort(key=lambda x: x.get('date', ''), reverse=True)
+
+    # 返回限制数量的文章和统计信息
+    return {
+        'cards': cards[:limit],
+        'total': len(cards),
+        'has_more': len(cards) > limit,
+        'all_cards': cards  # 保留所有文章用于其他用途
+    }
 
 def generate_blog_preview_html():
     """生成博客预览区域HTML - 供外部调用的接口"""
@@ -86,15 +104,23 @@ def generate_blog_preview_html():
         print("无法加载博客配置数据")
         return ""
 
-    # 获取技术分享分类的代表性卡片（默认显示）
-    featured_cards = get_featured_cards_for_category(blog_config, "技术分享")
+    # 自动扫描所有分类的文章（限制数量用于预览）
+    all_featured_cards = {}
+    for category in blog_config.get('categories', []):
+        result = get_all_cards_for_category(category['id'])
+        all_featured_cards[category['id']] = result
+
+    # 默认显示第一个分类的卡片
+    first_category_id = blog_config.get('categories', [{}])[0].get('id')
+    featured_cards = all_featured_cards.get(first_category_id, [])
 
     template = env.get_template('home/blog_preview.html')
     return template.render(
         title=blog_config.get('title', '个人博客'),
         subtitle=blog_config.get('subtitle', ''),
         categories=blog_config.get('categories', []),
-        featured_cards=featured_cards
+        featured_cards=featured_cards,
+        all_featured_cards=all_featured_cards
     )
 
 if __name__ == "__main__":

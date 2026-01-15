@@ -1,0 +1,50 @@
+<!-- 技术栈预览区域 -->
+<section id="stack" class="py-20 px-4 md:px-8 bg-gradient-to-br from-green-50 to-blue-50">
+    <div class="container mx-auto max-w-6xl">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center reveal-element">
+            {{ title }}
+        </h2>
+        <p class="text-apple-gray text-center mb-12 reveal-element" data-sr-delay="100">
+            {{ subtitle }}
+        </p>
+
+        <!-- 技术栈网格 -->
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6 reveal-element" data-sr-delay="200">
+            {% for tech_name, skills in stack_data.items() %}
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4 md:p-6 hover:shadow-lg transition-all duration-300 hover:scale-105">
+                <!-- 技术名称和图标 -->
+                <div class="flex items-center justify-center mb-3 md:mb-4">
+                    <div class="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center mr-2 md:mr-3">
+                        <i class="{{ icon_map.get(tech_name, 'fas fa-code') }} text-sm md:text-base text-blue-600"></i>
+                    </div>
+                    <h3 class="text-sm md:text-base font-semibold text-gray-800 capitalize">
+                        {{ tech_name }}
+                    </h3>
+                </div>
+
+                <!-- 技能列表 -->
+                <div class="space-y-1 md:space-y-2">
+                    {% for skill in skills[:3] %}  <!-- 只显示前3个技能 -->
+                    <div class="flex items-center">
+                        <div class="w-1.5 h-1.5 bg-green-500 rounded-full mr-2 flex-shrink-0"></div>
+                        <span class="text-xs md:text-sm text-gray-600 truncate">{{ skill }}</span>
+                    </div>
+                    {% endfor %}
+                    {% if skills|length > 3 %}
+                    <div class="text-xs text-gray-400 text-center mt-2">
+                        +{{ skills|length - 3 }} 更多
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- 技能数量 -->
+                <div class="mt-3 md:mt-4 pt-2 md:pt-3 border-t border-gray-100">
+                    <div class="text-center">
+                        <span class="text-xs text-gray-500">{{ skills|length }} 项技能</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

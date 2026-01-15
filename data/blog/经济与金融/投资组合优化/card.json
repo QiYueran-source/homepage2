@@ -1,0 +1,10 @@
+{
+    "id": "portfolio-optimization",
+    "title": "现代投资组合理论与Python实现",
+    "date": "2025-01-20",
+    "summary": "使用马科维茨投资组合理论和Python优化股票投资组合，实现风险-收益的最优平衡...",
+    "image": "https://picsum.photos/seed/portfolio/800/500",
+    "category": "经济与金融",
+    "tags": ["投资组合", "风险管理", "量化投资", "Python"],
+    "status": "published"
+}

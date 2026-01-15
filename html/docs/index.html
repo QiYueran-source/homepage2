@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文档下载 - 齐悦然</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- 自定义样式 -->
+    <style>
+        /* Apple 风格颜色变量 */
+        :root {
+            --apple-black: #1d1d1f;
+            --apple-gray: #86868b;
+            --apple-lightgray: #f5f5f7;
+            --apple-white: #ffffff;
+            --apple-hover: #0071e3;
+        }
+
+        .apple-black { color: var(--apple-black); }
+        .apple-gray { color: var(--apple-gray); }
+        .apple-lightgray { background-color: var(--apple-lightgray); }
+        .apple-white { color: var(--apple-white); }
+        .apple-hover { color: var(--apple-hover); }
+        .bg-apple-hover { background-color: var(--apple-hover); }
+        .text-apple-black { color: var(--apple-black); }
+        .text-apple-gray { color: var(--apple-gray); }
+        .text-apple-lightgray { color: var(--apple-lightgray); }
+        .bg-apple-lightgray { background-color: var(--apple-lightgray); }
+        .bg-apple-white { background-color: var(--apple-white); }
+        .text-apple-hover { color: var(--apple-hover); }
+    </style>
+</head>
+<body class="bg-apple-lightgray">
+
+<!-- 导航栏 -->
+<section id="docs-nav" class="py-4 px-4 md:px-8 bg-apple-white border-b border-gray-200">
+    <div class="container mx-auto">
+        <div class="flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-apple-black">文档下载</h1>
+            <div class="flex space-x-4">
+                <a href="../home.html"
+                   class="inline-flex items-center px-4 py-2 bg-apple-hover text-apple-white rounded-lg hover:bg-[#0077ED] transition-all back-btn">
+                    <i class="fa-solid fa-arrow-left mr-2"></i>
+                    返回首页
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 页面标题区域 -->
+<section id="docs-header" class="py-16 px-4 md:px-8 bg-gradient-to-br from-blue-50 to-indigo-50">
+    <div class="container mx-auto max-w-4xl text-center">
+        <h1 class="text-4xl md:text-5xl font-bold text-apple-black mb-6">
+            文档下载
+        </h1>
+        <p class="text-xl text-apple-gray mb-8">
+            这里提供一些我整理的文档，供大家参考
+        </p>
+        <div class="flex flex-wrap justify-center gap-2">
+            <span class="px-4 py-2 bg-white rounded-full text-sm font-medium text-apple-gray shadow-sm">
+                实习证明
+            </span>
+            <span class="px-4 py-2 bg-white rounded-full text-sm font-medium text-apple-gray shadow-sm">
+                竞赛奖项
+            </span>
+            <span class="px-4 py-2 bg-white rounded-full text-sm font-medium text-apple-gray shadow-sm">
+                获奖证明
+            </span>
+            <span class="px-4 py-2 bg-white rounded-full text-sm font-medium text-apple-gray shadow-sm">
+                技能证书
+            </span>
+            <span class="px-4 py-2 bg-white rounded-full text-sm font-medium text-apple-gray shadow-sm">
+                因子文档
+            </span>
+            <span class="px-4 py-2 bg-white rounded-full text-sm font-medium text-apple-gray shadow-sm">
+                论文文档
+            </span>
+            <span class="px-4 py-2 bg-white rounded-full text-sm font-medium text-apple-gray shadow-sm">
+                项目文档
+            </span>
+            <span class="px-4 py-2 bg-white rounded-full text-sm font-medium text-apple-gray shadow-sm">
+                其他文档
+            </span>
+        </div>
+    </div>
+</section>
+
+<!-- 文档列表区域 -->
+<section id="docs-content" class="py-16 px-4 md:px-8">
+    <div class="container mx-auto max-w-6xl">
+        <!-- 分类标题 -->
+        <div class="mb-12">
+            <h2 class="text-2xl font-bold text-apple-black mb-8 flex items-center">
+                <i class="fa-solid fa-folder-open mr-3 text-apple-hover"></i>
+                实习证明
+                <span class="ml-3 px-3 py-1 bg-apple-lightgray text-apple-gray text-sm rounded-full">
+                    1 个文档
+                </span>
+            </h2>
+
+            <!-- 文档卡片网格 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300">
+                    <!-- 卡片头部 -->
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-apple-lightgray rounded-lg flex items-center justify-center mr-4">
+                                    <i class="fa-solid fa-file-code text-xl text-apple-hover"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-apple-black text-lg leading-tight">
+                                        阿里巴巴-暑期实习证明
+                                    </h3>
+                                    <p class="text-apple-gray text-sm mt-1">
+                                        实习证明
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 文件信息 -->
+                        <div class="flex items-center justify-between text-sm text-apple-gray mb-4">
+                            <span class="flex items-center">
+                                <i class="fa-solid fa-weight-hanging mr-1"></i>
+                                0B
+                            </span>
+                            <span class="flex items-center">
+                                <i class="fa-solid fa-file mr-1"></i>
+                                MD
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- 下载按钮 -->
+                    <div class="px-6 pb-6">
+                        <a href="files/实习证明1.md"
+                           download="阿里巴巴-暑期实习证明"
+                           class="w-full bg-apple-hover text-white py-3 px-4 rounded-lg hover:bg-[#0077ED] transition-all duration-300 flex items-center justify-center font-medium">
+                            <i class="fa-solid fa-download mr-2"></i>
+                            下载文档
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 页脚 -->
+<section id="docs-footer" class="py-12 px-4 md:px-8 bg-apple-black text-white">
+    <div class="container mx-auto max-w-4xl text-center">
+        <p class="text-apple-lightgray">
+            文档下载模块 - 提供技术资料和文档下载服务
+        </p>
+        <p class="text-apple-lightgray text-sm mt-4">
+            &copy; 2025 个人网站
+        </p>
+    </div>
+</section>
+
+<!-- 页面特定样式 -->
+<style>
+    /* 卡片悬停效果增强 */
+    .card-hover {
+        transition: all 0.3s ease;
+    }
+
+    .card-hover:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    /* 下载按钮动画 */
+    .download-btn {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .download-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s;
+    }
+
+    .download-btn:hover::before {
+        left: 100%;
+    }
+
+    /* 响应式优化 */
+    @media (max-width: 768px) {
+        .grid-cols-1.md\\:grid-cols-2.lg\\:grid-cols-3 {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<!-- JavaScript -->
+<script>
+    // 滚动渐显动画
+    document.addEventListener('DOMContentLoaded', function() {
+        // 检查是否支持Intersection Observer
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-in');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            // 观察所有需要动画的元素
+            document.querySelectorAll('.reveal-element').forEach(el => {
+                observer.observe(el);
+            });
+        }
+    });
+
+    // 下载统计（可选功能）
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('a[href*="files/"]')) {
+            // 可以在这里添加下载统计逻辑
+            console.log('文档下载:', e.target.closest('a').getAttribute('download'));
+        }
+    });
+</script>
+
+</body>
+</html>

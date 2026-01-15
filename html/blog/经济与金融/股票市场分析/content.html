@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>股票市场技术分析指南 - 个人博客</title>
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome图标 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- 引入ScrollReveal实现滚动渐显动画 -->
+    <script src="https://unpkg.com/scrollreveal@4.0.9/dist/scrollreveal.min.js"></script>
+
+    <!-- 自定义Tailwind配置（苹果官网配色） -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        apple: {
+                            black: '#1D1D1F',
+                            white: '#FFFFFF',
+                            gray: '#86868B',
+                            lightgray: '#F5F5F7',
+                            hover: '#0071E3'
+                        }
+                    },
+                    fontFamily: {
+                        sf: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- 自定义样式 -->
+    <style type="text/tailwindcss">
+        /* 文章内容样式 */
+        .article-content {
+            line-height: 1.8;
+        }
+        .article-content h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 2rem 0 1rem 0;
+            color: #1D1D1F;
+        }
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 1.5rem 0 1rem 0;
+            color: #1D1D1F;
+        }
+        .article-content h3 {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin: 1.25rem 0 0.75rem 0;
+            color: #1D1D1F;
+        }
+        .article-content p {
+            margin: 1rem 0;
+            color: #333;
+        }
+        .article-content ul, .article-content ol {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+        .article-content li {
+            margin: 0.5rem 0;
+        }
+        .article-content code {
+            background: #f5f5f5;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9em;
+        }
+        .article-content pre {
+            background: #f8f8fa;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        .article-content blockquote {
+            border-left: 4px solid #0071E3;
+            padding-left: 1rem;
+            margin: 1rem 0;
+            color: #666;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body class="font-sf bg-apple-lightgray text-apple-black">
+    <!-- 导航栏 -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 md:px-8 py-4">
+            <div class="flex items-center justify-between">
+                <a href="../../../home.html" class="text-apple-hover hover:text-[#0077ED] flex items-center transition-colors">
+                    <i class="fa-solid fa-home mr-2"></i>
+                    首页
+                </a>
+
+                <div class="flex items-center space-x-4">
+                    <a href="../经济与金融.html" class="text-apple-hover hover:text-[#0077ED] flex items-center transition-colors">
+                        <i class="fa-solid fa-arrow-left mr-2"></i>
+                        经济与金融
+                    </a>
+                    <span class="text-apple-gray text-sm hidden md:block">
+                        经济与金融 · 2025-01-17
+                    </span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 文章容器 -->
+    <div class="container mx-auto px-4 md:px-8 py-8 max-w-4xl">
+
+        <!-- 文章头部 -->
+        <header class="mb-8">
+            <!-- 分类和日期 -->
+            <div class="flex items-center gap-4 text-sm text-apple-gray mb-4">
+                <span class="bg-apple-lightgray px-3 py-1 rounded-full">经济与金融</span>
+                <span>2025-01-17</span>
+            </div>
+
+            <!-- 文章标题 -->
+            <h1 class="text-3xl md:text-4xl font-bold text-apple-black mb-4 leading-tight">
+                股票市场技术分析指南
+            </h1>
+
+            <!-- 文章摘要 -->
+            <p class="text-lg text-apple-gray leading-relaxed">
+                掌握K线图、趋势线、技术指标等基础分析工具，理解股价波动规律，提升投资决策准确性...
+            </p>
+
+            <!-- 标签 -->
+            <div class="flex flex-wrap gap-2 mt-4">
+                <span class="bg-apple-lightgray text-apple-gray text-sm px-3 py-1 rounded-full">
+                    <i class="fa-solid fa-tag mr-1"></i>股票市场
+                </span>
+                <span class="bg-apple-lightgray text-apple-gray text-sm px-3 py-1 rounded-full">
+                    <i class="fa-solid fa-tag mr-1"></i>技术分析
+                </span>
+                <span class="bg-apple-lightgray text-apple-gray text-sm px-3 py-1 rounded-full">
+                    <i class="fa-solid fa-tag mr-1"></i>K线图
+                </span>
+                <span class="bg-apple-lightgray text-apple-gray text-sm px-3 py-1 rounded-full">
+                    <i class="fa-solid fa-tag mr-1"></i>技术指标
+                </span>
+            </div>
+        </header>
+
+        <!-- 文章内容 -->
+        <article class="bg-white rounded-xl shadow-sm p-8 md:p-12 article-content">
+            <h1 id="_1">股票市场技术分析指南</h1>
+<h2 id="_2">引言</h2>
+<p>股票市场技术分析是投资者通过研究历史价格和交易量数据来预测未来股价走势的方法。本文将介绍技术分析的基础知识和常用工具。</p>
+<h2 id="k">K线图基础</h2>
+<h3 id="k_1">K线的基本结构</h3>
+<ul>
+<li><strong>开盘价</strong>：当日第一笔成交价格</li>
+<li><strong>收盘价</strong>：当日最后一笔成交价格</li>
+<li><strong>最高价</strong>：当日最高成交价格</li>
+<li><strong>最低价</strong>：当日最低成交价格</li>
+</ul>
+<h3 id="_3">阴阳烛的含义</h3>
+<ul>
+<li><strong>阳烛</strong>（上涨）：收盘价高于开盘价，通常用红色或绿色表示</li>
+<li><strong>阴烛</strong>（下跌）：收盘价低于开盘价，通常用黑色或红色表示</li>
+</ul>
+<h2 id="_4">技术指标解析</h2>
+<h3 id="ma">移动平均线 (MA)</h3>
+<p>移动平均线是平滑价格数据的重要工具，帮助识别趋势方向。</p>
+<p><strong>常用类型：</strong>
+- SMA (简单移动平均线)
+- EMA (指数移动平均线)
+- WMA (加权移动平均线)</p>
+<h3 id="rsi">相对强弱指数 (RSI)</h3>
+<p>RSI指标用于判断市场的超买或超卖状态。</p>
+<p><strong>判断标准：</strong>
+- RSI &gt; 70：超买区，可能回调
+- RSI &lt; 30：超卖区，可能反弹
+- 50附近：中性区域</p>
+<h3 id="macd">MACD指标</h3>
+<p>MACD是趋势跟踪动量指标，由DIF和DEA两条线以及MACD柱状图组成。</p>
+<h2 id="_5">趋势分析</h2>
+<h3 id="_6">上升趋势</h3>
+<ul>
+<li>股价持续上涨</li>
+<li>成交量逐渐放大</li>
+<li>技术指标显示乐观信号</li>
+</ul>
+<h3 id="_7">下降趋势</h3>
+<ul>
+<li>股价持续下跌</li>
+<li>成交量逐渐萎缩</li>
+<li>技术指标显示悲观信号</li>
+</ul>
+<h3 id="_8">横盘整理</h3>
+<ul>
+<li>股价在一定范围内波动</li>
+<li>成交量相对稳定</li>
+<li>等待突破方向</li>
+</ul>
+<h2 id="_9">支撑与阻力</h2>
+<h3 id="_10">支撑位</h3>
+<p>股价下跌时可能获得支撑的价位，通常是前期低点或重要均线位置。</p>
+<h3 id="_11">阻力位</h3>
+<p>股价上涨时可能遇到阻力的价位，通常是前期高点或重要均线位置。</p>
+<h2 id="_12">实战策略</h2>
+<h3 id="_13">突破策略</h3>
+<p>在股价突破重要阻力位时买入，在跌破重要支撑位时卖出。</p>
+<h3 id="_14">回调买入</h3>
+<p>在上升趋势中，股价回调到支撑位附近时买入。</p>
+<h3 id="_15">反弹卖出</h3>
+<p>在下降趋势中，股价反弹到阻力位附近时卖出。</p>
+<h2 id="_16">风险控制</h2>
+<h3 id="_17">止损原则</h3>
+<ul>
+<li>设置合理的止损点位</li>
+<li>控制单次亏损不超过总资金的2%</li>
+<li>严格执行止损纪律</li>
+</ul>
+<h3 id="_18">仓位管理</h3>
+<ul>
+<li>根据风险承受能力控制仓位</li>
+<li>高风险机会降低仓位</li>
+<li>分散投资降低整体风险</li>
+</ul>
+<h2 id="_19">总结</h2>
+<p>技术分析是股票投资的重要工具，但并非万能。建议结合基本面分析和市场环境综合判断。记住，投资有风险，入市需谨慎。</p>
+        </article>
+
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // 滚动渐显动画
+        ScrollReveal().reveal('.reveal-element');
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

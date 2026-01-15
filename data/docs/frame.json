@@ -1,0 +1,13 @@
+{
+    "nav_title": "文档下载",
+    "page_title": "文档下载 - 齐悦然",
+    "nav_buttons": [
+        {
+            "text": "返回首页",
+            "href": "../home.html",
+            "icon": "fa-arrow-left",
+            "class": "back-btn"
+        }
+    ],
+    "footer_extra": "文档下载模块 - 提供技术资料和文档下载服务"
+}

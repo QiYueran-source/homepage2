@@ -59,14 +59,18 @@ def main():
     tasks = {
         "home": "scripts.home.generator.generate_home_html",
         "resume": "scripts.sections.resume.generator.generate_resume_page",
-        "blog": "scripts.blog.generator.scan_and_generate_blog",
+        "blog": "scripts.sections.blog.generator.scan_and_generate_blog_and_home",
+        "project": "scripts.sections.project.generator.scan_and_generate_projects_and_home",
+        "docs": "scripts.sections.docs.generator.generate_docs_page_and_home",
+        "stack": "scripts.sections.stack.generator.generate_stack_page_and_home",
+        "contact": "scripts.sections.contact.generator.generate_contact_page_and_home",
     }
 
     # 处理默认值和验证
     targets = args.targets if args.targets else ["all"]
 
     # 验证参数
-    valid_targets = ["home", "resume", "all"]
+    valid_targets = ["home", "resume", "blog", "project", "docs", "stack", "contact", "all"]
     for target in targets:
         if target not in valid_targets:
             parser.error(f"无效选择: '{target}' (选择: {', '.join(valid_targets)})")

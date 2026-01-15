@@ -1,0 +1,13 @@
+{
+    "nav_title": "项目经历",
+    "page_title": "项目经历 - 齐悦然",
+    "nav_buttons": [
+        {
+            "text": "返回首页",
+            "href": "../home.html",
+            "icon": "fa-arrow-left",
+            "class": "back-btn"
+        }
+    ],
+    "footer_extra": "项目模块 - 展示个人技术作品和项目经验"
+}

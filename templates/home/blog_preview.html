@@ -1,109 +1,287 @@
 <!-- 博客预览区域 -->
 <section id="blog-preview" class="py-20 px-4 md:px-8 bg-apple-lightgray">
-    <div class="container mx-auto max-w-4xl">
+    <div class="container mx-auto">
         <h2 class="text-3xl md:text-4xl font-bold mb-16 text-center reveal-element">{{ title }}</h2>
 
-        <!-- 板块选项卡 -->
-        <div class="flex flex-wrap justify-center gap-4 reveal-element" data-sr-delay="200">
+        <!-- 博客分类区块 -->
             {% for category in categories %}
-            <button onclick="switchBlogCategory('{{ category.id }}')"
-                    id="blog-tab-{{ category.id }}"
-                    class="blog-category-tab px-6 py-3 rounded-full bg-white border-2 border-gray-200 hover:border-apple-hover hover:bg-apple-hover hover:text-white transition-all {{ 'bg-apple-hover text-white border-apple-hover active' if loop.first else '' }}">
-                <i class="fa-solid {{ category.icon }} mr-2"></i>
+        <div class="category-section mb-20 reveal-element" data-sr-delay="{{ loop.index * 100 }}">
+            <!-- 分类标题 -->
+            <div class="text-center mb-12">
+                <h3 class="text-2xl md:text-3xl font-bold mb-4 flex items-center justify-center">
+                    <i class="fa-solid {{ category.icon }} mr-3 text-apple-hover"></i>
                 {{ category.name }}
-            </button>
-            {% endfor %}
+                </h3>
+                {% if category.description %}
+                <p class="text-gray-600 max-w-2xl mx-auto">{{ category.description }}</p>
+                {% endif %}
         </div>
 
-        <!-- 代表性文章卡片区域 -->
-        <div id="featured-cards-container" class="mt-12">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {% for card in featured_cards %}
+            <!-- 分类文章卡片 -->
+            {% set category_data = all_featured_cards.get(category.id, {}) %}
+            {% set category_cards = category_data.get('cards', []) %}
+            {% set total_count = category_data.get('total', 0) %}
+            {% set has_more = category_data.get('has_more', False) %}
+            {% if category_cards %}
+            <!-- 桌面端：网格布局 -->
+            <div class="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {% for card in category_cards %}
                 {% set card_delay = loop.index * 200 %}
                 {% include 'components/card.html' %}
                 {% endfor %}
             </div>
-        </div>
 
-        <!-- 板块描述区域 -->
-        <div class="text-center mt-8 reveal-element" data-sr-delay="300">
-            <div id="blog-category-description" class="bg-white rounded-xl p-6 max-w-2xl mx-auto shadow-sm">
-                <p class="text-apple-gray italic">选择上方板块标签，浏览不同主题的文章内容</p>
+            <!-- 移动端：横向滑动布局 -->
+            <div class="md:hidden">
+                <div class="horizontal-scroll-container" data-category="{{ category.id }}">
+                    <div class="horizontal-scroll-content">
+                        {% for card in category_cards %}
+                        {% set card_delay = loop.index * 200 %}
+                        <div class="horizontal-scroll-item">
+                            {% include 'components/card.html' %}
+                        </div>
+                {% endfor %}
             </div>
         </div>
+
+                <!-- 滑动指示器 -->
+                <div class="scroll-indicator mt-4">
+                    <div class="scroll-dots">
+                        {% for card in category_cards %}
+                        <span class="scroll-dot {{ 'active' if loop.first else '' }}"
+                              data-slide="{{ loop.index }}"
+                              data-category="{{ category.id }}"></span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- 查看更多链接 -->
+            <div class="text-center mt-8">
+                <a href="blog/{{ category.id }}/{{ category.id }}.html"
+                   class="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors">
+                    <span>
+                        {% if has_more %}
+                            查看全部 {{ total_count }} 篇文章
+                        {% else %}
+                            查看{{ total_count }}篇文章
+                        {% endif %}
+                    </span>
+                    <i class="fa-solid fa-arrow-right ml-2"></i>
+                </a>
+        </div>
+            {% else %}
+            <div class="text-center py-12 bg-white rounded-xl shadow-sm">
+                <i class="fa-solid fa-book-open text-4xl text-gray-300 mb-4"></i>
+                <p class="text-apple-gray text-lg">该板块暂无代表性文章</p>
+                <p class="text-gray-500 text-sm mt-2">敬请期待精彩内容</p>
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+
     </div>
 </section>
 
-<!-- JavaScript for blog category switching -->
-<script>
-let currentBlogCategory = '';
-
-function switchBlogCategory(categoryId) {
-    currentBlogCategory = categoryId;
-
-    // 更新选项卡样式
-    document.querySelectorAll('.blog-category-tab').forEach(tab => {
-        tab.classList.remove('bg-apple-hover', 'text-white', 'border-apple-hover', 'active');
-        tab.classList.add('bg-white', 'border-gray-200');
-    });
-
-    // 高亮当前选项卡
-    const activeTab = document.getElementById(`blog-tab-${categoryId}`);
-    if (activeTab) {
-        activeTab.classList.remove('bg-white', 'border-gray-200');
-        activeTab.classList.add('bg-apple-hover', 'text-white', 'border-apple-hover', 'active');
-    }
-
-    // 更新卡片区域和描述区域
-    updateCategoryContent(categoryId);
-
-    console.log('切换到博客板块:', categoryId);
+<!-- 横向滑动样式 -->
+<style>
+.horizontal-scroll-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch; /* iOS流畅滚动 */
+    scrollbar-width: none; /* Firefox隐藏滚动条 */
+    -ms-overflow-style: none; /* IE隐藏滚动条 */
+    scroll-behavior: smooth;
 }
 
-function updateCategoryContent(categoryId) {
-    const category = blogCategories.find(c => c.id === categoryId);
-    const descriptionDiv = document.getElementById('blog-category-description');
-    const cardsContainer = document.getElementById('featured-cards-container');
+.horizontal-scroll-container::-webkit-scrollbar {
+    display: none; /* Chrome隐藏滚动条 */
+}
 
-    if (descriptionDiv && category) {
-        // 技术分享分类显示卡片，其他分类显示提示
-        if (categoryId === '技术分享') {
-            descriptionDiv.innerHTML = `
-                <h3 class="text-lg font-semibold mb-2">${category.name}</h3>
-                <p class="text-gray-600">${category.description}</p>
-                <div class="mt-4">
-                    <span class="text-sm text-green-600">📚 查看下方精选文章</span>
-                </div>
-            `;
-            // 显示卡片容器
-            if (cardsContainer) {
-                cardsContainer.style.display = 'block';
+.horizontal-scroll-content {
+    display: flex;
+    gap: 1rem;
+    padding: 0 1rem;
+    min-width: max-content;
+}
+
+.horizontal-scroll-item {
+    flex: 0 0 280px; /* 固定宽度 */
+    max-width: 280px;
+}
+
+/* 滚动指示器 */
+.scroll-indicator {
+    display: flex;
+    justify-content: center;
+}
+
+.scroll-dots {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.scroll-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #e5e7eb;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.scroll-dot.active {
+    background-color: #007aff;
+}
+
+/* 卡片在横向滑动时的样式调整 */
+.horizontal-scroll-item .card {
+    height: 100%;
+    margin: 0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.horizontal-scroll-item .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+</style>
+
+<!-- 横向滑动JavaScript -->
+<script>
+// 横向滑动管理器
+class HorizontalScrollManager {
+    constructor() {
+        this.containers = new Map();
+        this.init();
+    }
+
+    init() {
+        this.attachScrollListeners();
+        this.attachDotListeners();
+        this.updateAllIndicators();
+    }
+
+    attachScrollListeners() {
+        document.querySelectorAll('.horizontal-scroll-container').forEach(container => {
+            const categoryId = container.dataset.category;
+            this.containers.set(categoryId, container);
+
+            // 监听滚动事件，更新指示器
+            container.addEventListener('scroll', () => {
+                this.updateActiveIndicator(categoryId);
+            }, { passive: true });
+
+            // 触摸结束时，自动对齐到最近的卡片
+            let isScrolling;
+            container.addEventListener('scroll', () => {
+                clearTimeout(isScrolling);
+                isScrolling = setTimeout(() => {
+                    this.snapToNearestCard(categoryId);
+                }, 100);
+            }, { passive: true });
+        });
+    }
+
+    attachDotListeners() {
+        document.querySelectorAll('.scroll-dot').forEach(dot => {
+            dot.addEventListener('click', (e) => {
+                const categoryId = e.target.dataset.category;
+                const slideIndex = parseInt(e.target.dataset.slide) - 1;
+                this.scrollToCard(categoryId, slideIndex);
+            });
+        });
+    }
+
+    updateActiveIndicator(categoryId) {
+        const container = this.containers.get(categoryId);
+        if (!container) return;
+
+        const content = container.querySelector('.horizontal-scroll-content');
+        const items = content.children;
+        const containerRect = container.getBoundingClientRect();
+        const containerCenter = containerRect.left + containerRect.width / 2;
+
+        let activeIndex = 0;
+        let minDistance = Infinity;
+
+        Array.from(items).forEach((item, index) => {
+            const itemRect = item.getBoundingClientRect();
+            const itemCenter = itemRect.left + itemRect.width / 2;
+            const distance = Math.abs(containerCenter - itemCenter);
+
+            if (distance < minDistance) {
+                minDistance = distance;
+                activeIndex = index;
             }
-        } else {
-            descriptionDiv.innerHTML = `
-                <h3 class="text-lg font-semibold mb-2">${category.name}</h3>
-                <p class="text-gray-600">${category.description}</p>
-                <div class="mt-4">
-                    <span class="text-sm text-gray-500">该板块的博客文章正在准备中，敬请期待！</span>
-                </div>
-            `;
-            // 隐藏卡片容器
-            if (cardsContainer) {
-                cardsContainer.style.display = 'none';
+        });
+
+        // 更新指示器状态
+        const dots = document.querySelectorAll(`.scroll-dot[data-category="${categoryId}"]`);
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === activeIndex);
+        });
+    }
+
+    updateAllIndicators() {
+        this.containers.forEach((container, categoryId) => {
+            this.updateActiveIndicator(categoryId);
+        });
+    }
+
+    snapToNearestCard(categoryId) {
+        const container = this.containers.get(categoryId);
+        if (!container) return;
+
+        const content = container.querySelector('.horizontal-scroll-content');
+        const items = content.children;
+        const containerRect = container.getBoundingClientRect();
+        const containerCenter = containerRect.left + containerRect.width / 2;
+
+        let nearestIndex = 0;
+        let minDistance = Infinity;
+
+        Array.from(items).forEach((item, index) => {
+            const itemRect = item.getBoundingClientRect();
+            const itemCenter = itemRect.left + itemRect.width / 2;
+            const distance = Math.abs(containerCenter - itemCenter);
+
+            if (distance < minDistance) {
+                minDistance = distance;
+                nearestIndex = index;
             }
+        });
+
+        this.scrollToCard(categoryId, nearestIndex);
+    }
+
+    scrollToCard(categoryId, index) {
+        const container = this.containers.get(categoryId);
+        if (!container) return;
+
+        const content = container.querySelector('.horizontal-scroll-content');
+        const items = content.children;
+
+        if (items[index]) {
+            const item = items[index];
+            const containerRect = container.getBoundingClientRect();
+            const itemRect = item.getBoundingClientRect();
+
+            const scrollLeft = container.scrollLeft + (itemRect.left - containerRect.left) - (containerRect.width - itemRect.width) / 2;
+
+            container.scrollTo({
+                left: scrollLeft,
+                behavior: 'smooth'
+            });
         }
     }
 }
 
-// 全局变量存储分类数据
-const blogCategories = JSON.parse('{{ categories|tojson|safe }}');
-
-// 初始化
+// 初始化横向滑动管理器
 document.addEventListener('DOMContentLoaded', function() {
-    // 默认选中第一个板块
-    const firstCategory = blogCategories[0];
-    if (firstCategory) {
-        switchBlogCategory(firstCategory.id);
-    }
+    new HorizontalScrollManager();
 });
 </script>
+

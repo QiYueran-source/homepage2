@@ -7,7 +7,7 @@
     <div class="relative overflow-hidden">
         <img src="{{ card.image }}"
              alt="{{ card.title }}"
-             class="w-full h-48 object-cover transition-transform duration-300 hover:scale-105">
+             class="w-full h-60 object-cover transition-transform duration-300 hover:scale-105">
 
         <!-- 徽章（可选） -->
         {% if card.badge %}
@@ -30,84 +30,23 @@
     {% endif %}
 
     <div class="p-6">
-        <!-- 头部信息区域 -->
-        <div class="flex justify-between items-start mb-3">
-            <!-- 日期或分类 -->
-            <span class="text-apple-gray text-sm">
-                {% if card.date %}
-                    {{ card.date }}
-                {% elif card.category %}
-                    {{ card.category }}
-                {% endif %}
-            </span>
-
-            <!-- 阅读时间（博客专用） -->
-            {% if card.read_time %}
-            <span class="text-apple-gray text-sm flex items-center">
-                <i class="fa-solid fa-clock mr-1"></i>
-                {{ card.read_time }}min
-            </span>
-            {% endif %}
-        </div>
-
-        <!-- 标题 -->
-        <h3 class="text-xl font-semibold mb-3 hover:text-apple-hover transition-colors">
+        <span class="text-apple-gray text-sm">{{ card.date }}</span>
+        <h3 class="text-xl font-semibold mt-2 mb-3 hover:text-apple-hover transition-colors">
             {% if card.url %}
-            <a href="{{ card.url }}" class="block">{{ card.title }}</a>
+            <a href="{{ card.url }}">{{ card.title }}</a>
             {% else %}
             {{ card.title }}
             {% endif %}
         </h3>
-
-        <!-- 摘要/描述 -->
-        <p class="text-apple-gray mb-4 leading-relaxed">
+        <p class="text-apple-gray mb-4">
             {% if card.summary %}
                 {{ card.summary }}
             {% elif card.description %}
                 {{ card.description }}
             {% endif %}
         </p>
-
-        <!-- 标签区域（可选） -->
-        {% if card.tags and card.tags|length > 0 %}
-        <div class="flex flex-wrap gap-2 mb-4">
-            {% for tag in card.tags[:3] %}
-            <span class="bg-apple-lightgray text-apple-gray text-xs px-2 py-1 rounded-md">
-                {{ tag }}
-            </span>
-            {% endfor %}
-            {% if card.tags|length > 3 %}
-            <span class="text-apple-gray text-xs px-2 py-1">
-                +{{ card.tags|length - 3 }}
-            </span>
-            {% endif %}
-        </div>
-        {% endif %}
-
-        <!-- 底部操作区域 -->
-        <div class="flex justify-between items-center pt-3 border-t border-gray-100">
-            <!-- 主操作链接 -->
-            {% if card.url %}
-            <a href="{{ card.url }}"
-               class="text-apple-hover font-medium flex items-center hover:text-[#0077ED] transition-colors">
-                {{ card.link_text or '查看详情' }}
-                <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
-            </a>
-            {% endif %}
-
-            <!-- 外部链接（项目专用） -->
-            {% if card.external_links %}
-            <div class="flex gap-3">
-                {% for link in card.external_links %}
-                <a href="{{ link.url }}"
-                   target="_blank"
-                   class="text-apple-gray hover:text-apple-hover transition-colors"
-                   title="{{ link.title or link.icon }}">
-                    <i class="fa-brands {{ link.icon }} text-lg"></i>
-                </a>
-                {% endfor %}
-            </div>
-            {% endif %}
-        </div>
+        <a href="{{ card.url }}" class="text-apple-hover font-medium flex items-center">
+            阅读全文 <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
+        </a>
     </div>
 </div>

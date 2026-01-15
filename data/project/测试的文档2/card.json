@@ -1,0 +1,13 @@
+{
+    "id": "test-document",
+    "title": "测试项目文档",
+    "summary": "这是一个测试项目，用于验证项目生成系统是否正常工作",
+    "technologies": ["测试技术", "文档"],
+    "image": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+    "github_url": "https://github.com/test/test-document",
+    "demo_url": "https://test-document.demo.com",
+    "featured": false,
+    "status": "completed",
+    "date": "2025-01-25",
+    "category": "测试项目"
+}
