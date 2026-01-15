@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>齐悦然 | 个人博客</title>
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome图标 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- 引入ScrollReveal实现苹果风格滚动渐显动画 -->
+    <script src="https://unpkg.com/scrollreveal@4.0.9/dist/scrollreveal.min.js"></script>
+
+    <!-- 自定义Tailwind配置（苹果官网配色+新增渐变） -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // 苹果官网核心配色
+                        apple: {
+                            black: '#1D1D1F',
+                            white: '#FFFFFF',
+                            gray: '#86868B',
+                            lightgray: '#F5F5F7',
+                            hover: '#0071E3', // 苹果交互主色
+                            gradient: '#E8E8ED' // 渐变辅助色
+                        }
+                    },
+                    fontFamily: {
+                        // 苹果San Francisco字体替代
+                        sf: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif']
+                    },
+                    backgroundImage: {
+                        // 苹果风格渐变背景
+                        'apple-gradient': 'linear-gradient(180deg, #F5F5F7 0%, #E8E8ED 100%)',
+                        'apple-card-gradient': 'linear-gradient(145deg, #FFFFFF 0%, #F8F8FA 100%)'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- 自定义样式（苹果风格+动画） -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            /* 苹果风格平滑滚动 */
+            .scroll-smooth {
+                scroll-behavior: smooth;
+            }
+            /* 导航栏滚动渐变效果（苹果磨砂玻璃） */
+            .nav-scrolled {
+                background-color: rgba(255, 255, 255, 0.85);
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+                box-shadow: 0 1px 8px rgba(0, 0, 0, 0.03);
+            }
+            /* 苹果风格卡片hover微动效（3D+阴影） */
+            .card-hover {
+                transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+                transform-style: preserve-3d;
+            }
+            .card-hover:hover {
+                transform: translateY(-6px) rotateX(2deg) rotateY(1deg);
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+            }
+            /* 苹果风格文字渐变 */
+            .text-gradient {
+                background: linear-gradient(90deg, #1D1D1F 0%, #0071E3 100%);
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+            }
+            /* 背景缓慢平移动画（苹果官网动态背景效果） */
+            .bg-animate {
+                background-position: 0 0;
+                animation: bgMove 20s ease infinite alternate;
+            }
+            @keyframes bgMove {
+                0% { background-position: 0 0; }
+                100% { background-position: 0 -20px; }
+            }
+        }
+    </style>
+</head>
+
+<body class="font-sf bg-apple-lightgray text-apple-black scroll-smooth bg-animate bg-apple-gradient">
+    <!-- 导航栏 -->
+    <!-- 顶部导航栏（苹果磨砂玻璃+固定） -->
+<nav id="main-nav" class="fixed top-0 left-0 w-full z-50 transition-all duration-500 py-4">
+    <div class="container mx-auto px-4 md:px-8 flex justify-between items-center">
+        <!-- 博客LOGO（个性化） -->
+        <a href="#" class="text-xl font-medium text-apple-black hover:text-apple-hover transition-colors">
+            <i class="fa-solid fa-code mr-2"></i>齐悦然
+        </a>
+
+        <!-- 桌面端导航菜单 -->
+        <div class="hidden md:flex space-x-8">
+            <a href="#home" class="text-apple-black hover:text-apple-hover transition-colors">齐悦然</a>
+            <a href="resume/index.html" class="text-apple-black hover:text-apple-hover transition-colors">个人简历</a>
+            <a href="#blog" class="text-apple-black hover:text-apple-hover transition-colors">博客</a>
+        </div>
+
+        <!-- 移动端汉堡菜单 -->
+        <button id="menu-btn" class="md:hidden text-apple-black text-xl">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+    </div>
+
+    <!-- 移动端菜单（默认隐藏） -->
+    <div id="mobile-menu" class="md:hidden hidden bg-apple-white absolute top-full left-0 w-full py-4 shadow-md backdrop-blur-md">
+        <div class="container mx-auto px-4 flex flex-col space-y-4">
+            <a href="#home" class="text-apple-black hover:text-apple-hover transition-colors py-2">齐悦然</a>
+            <a href="resume/index.html" class="text-apple-black hover:text-apple-hover transition-colors py-2">个人简历</a>
+            <a href="#blog" class="text-apple-black hover:text-apple-hover transition-colors py-2">博客</a>
+        </div>
+    </div>
+</nav>
+
+    <!-- 主要内容 -->
+    <!-- Hero区域（苹果全屏+渐变文字+动画） -->
+<section id="home" class="pt-32 pb-20 md:pt-40 md:pb-32 px-4 md:px-8 min-h-[80vh] flex items-center">
+    <div class="container mx-auto text-center">
+        <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight reveal-element">
+            <span class="text-gradient">数据驱动 · 工程化 · Python实践</span>
+        </h1>
+        <p class="text-xl md:text-2xl text-apple-gray max-w-3xl mx-auto mb-10 reveal-element" data-sr-delay="200">
+            专注python、数据科学、工程化
+        </p>
+        <a href="#resume" class="inline-block bg-apple-hover text-apple-white px-8 py-3 rounded-full text-lg hover:bg-[#0077ED] transition-all transform hover:scale-105 reveal-element" data-sr-delay="400">
+            查看我的简历 <i class="fa-solid fa-arrow-right ml-2"></i>
+        </a>
+    </div>
+</section><!-- 简历预览区域 -->
+<section id="resume" class="py-20 px-4 md:px-8 bg-apple-white">
+    <div class="container mx-auto max-w-4xl">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center reveal-element">
+            个人简历
+        </h2>
+        <p class="text-apple-gray text-center mb-12 reveal-element" data-sr-delay="100">
+            Python开发者 | 数据科学爱好者
+        </p>
+
+        <!-- 核心信息卡片网格 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            <!-- 教育背景 -->
+            <div class="card-hover bg-apple-card-gradient rounded-xl p-6 reveal-element">
+                <div class="text-apple-hover mb-3">
+                    <i class="fa-solid fa-graduation-cap text-2xl"></i>
+                </div>
+                <h3 class="font-semibold mb-2">教育背景</h3>
+                <p class="text-apple-gray text-sm">武汉大学 · 金融学、计算机科学与技术(辅修) · 本科 | 清华大学 · 管理科学与工程 · 硕士 | 哥伦比亚大学 · 数据科学 · 硕士</p>
+            </div>
+
+            <!-- 技术栈 -->
+            <div class="card-hover bg-apple-card-gradient rounded-xl p-6 reveal-element" data-sr-delay="100">
+                <div class="text-apple-hover mb-3">
+                    <i class="fa-solid fa-code text-2xl"></i>
+                </div>
+                <h3 class="font-semibold mb-2">技术栈</h3>
+                <p class="text-apple-gray text-sm">Python · polars · 机器学习 · 深度学习 · Web开发 · 量化金融</p>
+            </div>
+
+            <!-- 求职意向 -->
+            <div class="card-hover bg-apple-card-gradient rounded-xl p-6 reveal-element md:col-span-2 lg:col-span-1" data-sr-delay="200">
+                <div class="text-apple-hover mb-3">
+                    <i class="fa-solid fa-briefcase text-2xl"></i>
+                </div>
+                <h3 class="font-semibold mb-2">求职意向</h3>
+                <p class="text-apple-gray text-sm">Python后端开发工程师 | 机器学习和深度学习工程师 | 量化研究员 | 大模型研究员</p>
+            </div>
+        </div>
+
+        <!-- 代表项目 -->
+        <div class="mb-12">
+            <h3 class="text-xl font-semibold mb-6 text-center reveal-element" data-sr-delay="300">代表项目</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="card-hover bg-apple-card-gradient rounded-xl p-6 reveal-element" data-sr-delay="500">
+                    <div class="text-apple-hover mb-3">
+                        <i class="fa-solid fa-project-diagram text-xl"></i>
+                    </div>
+                    <p class="text-apple-gray">stock-clock · 基于python的模拟量化交易平台</p>
+                </div>
+                <div class="card-hover bg-apple-card-gradient rounded-xl p-6 reveal-element" data-sr-delay="600">
+                    <div class="text-apple-hover mb-3">
+                        <i class="fa-solid fa-project-diagram text-xl"></i>
+                    </div>
+                    <p class="text-apple-gray">预期协同效应—基于AI-Agent的视角 · 基于Pytorch和SB3的AED因子研究</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 查看完整简历按钮 -->
+        <div class="text-center reveal-element" data-sr-delay="600">
+            <a href="resume/index.html" class="inline-block bg-apple-hover text-apple-white px-8 py-3 rounded-full text-lg hover:bg-[#0077ED] transition-all transform hover:scale-105">
+                查看完整简历 <i class="fa-solid fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+    <!-- 页脚 -->
+    <!-- 页脚（苹果风格） -->
+<footer class="py-10 px-4 md:px-8 bg-apple-lightgray text-apple-gray">
+    <div class="container mx-auto text-center text-sm">
+        <p>© 2025 齐悦然 | 个人博客</p>
+        <p class="mt-2">数据驱动 · 极简 · 成长</p>
+    </div>
+</footer>
+
+    <!-- JavaScript交互逻辑（苹果风格动画+功能） -->
+    <script>
+        // 1. 导航栏滚动磨砂效果
+        const nav = document.getElementById('main-nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.add('nav-scrolled');
+            } else {
+                nav.classList.remove('nav-scrolled');
+            }
+        });
+
+        // 2. 移动端菜单切换
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            // 切换菜单图标（汉堡/叉号）
+            const icon = menuBtn.querySelector('i');
+            if (icon.classList.contains('fa-bars')) {
+                icon.classList.replace('fa-bars', 'fa-xmark');
+            } else {
+                icon.classList.replace('fa-xmark', 'fa-bars');
+            }
+        });
+
+        // 3. 平滑滚动（关闭移动端菜单）
+        const navLinks = document.querySelectorAll('nav a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                    const icon = menuBtn.querySelector('i');
+                    icon.classList.replace('fa-xmark', 'fa-bars');
+                }
+            });
+        });
+
+        // 4. 苹果风格滚动渐显动画配置
+        ScrollReveal({
+            origin: 'bottom',
+            distance: '20px',
+            duration: 800,
+            easing: 'cubic-bezier(0.25, 0.8, 0.25, 1)',
+            reset: false,
+            viewFactor: 0.1
+        });
+        // 初始化所有带reveal-element类的元素
+        ScrollReveal().reveal('.reveal-element');
+    </script>
+</body>
+</html>

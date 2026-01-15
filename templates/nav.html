@@ -1,0 +1,30 @@
+<!-- 顶部导航栏（苹果磨砂玻璃+固定） -->
+<nav id="main-nav" class="fixed top-0 left-0 w-full z-50 transition-all duration-500 py-4">
+    <div class="container mx-auto px-4 md:px-8 flex justify-between items-center">
+        <!-- 博客LOGO（个性化） -->
+        <a href="#" class="text-xl font-medium text-apple-black hover:text-apple-hover transition-colors">
+            <i class="fa-solid fa-code mr-2"></i>{{ nav_logo }}
+        </a>
+
+        <!-- 桌面端导航菜单 -->
+        <div class="hidden md:flex space-x-8">
+            {% for item in nav_items %}
+            <a href="{{ item.href }}" class="text-apple-black hover:text-apple-hover transition-colors">{{ item.title }}</a>
+            {% endfor %}
+        </div>
+
+        <!-- 移动端汉堡菜单 -->
+        <button id="menu-btn" class="md:hidden text-apple-black text-xl">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+    </div>
+
+    <!-- 移动端菜单（默认隐藏） -->
+    <div id="mobile-menu" class="md:hidden hidden bg-apple-white absolute top-full left-0 w-full py-4 shadow-md backdrop-blur-md">
+        <div class="container mx-auto px-4 flex flex-col space-y-4">
+            {% for item in nav_items %}
+            <a href="{{ item.href }}" class="text-apple-black hover:text-apple-hover transition-colors py-2">{{ item.title }}</a>
+            {% endfor %}
+        </div>
+    </div>
+</nav>

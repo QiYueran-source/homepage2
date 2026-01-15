@@ -1,0 +1,13 @@
+{
+  "title": "个人简历",
+  "subtitle": "Python开发者 | 数据科学爱好者",
+  "education": "武汉大学 · 金融学、计算机科学与技术(辅修) · 本科 | 清华大学 · 管理科学与工程 · 硕士 | 哥伦比亚大学 · 数据科学 · 硕士",
+  "projects": [
+    "stock-clock · 基于python的模拟量化交易平台",
+    "预期协同效应—基于AI-Agent的视角 · 基于Pytorch和SB3的AED因子研究"
+  ],
+  "stack": "Python · polars · 机器学习 · 深度学习 · Web开发 · 量化金融",
+  "expectation": "Python后端开发工程师 | 机器学习和深度学习工程师 | 量化研究员 | 大模型研究员",
+  "resume_url": "resume/index.html",
+  "resume_button_text": "查看完整简历"
+}
