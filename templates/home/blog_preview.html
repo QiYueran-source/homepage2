@@ -1,0 +1,109 @@
+<!-- 博客预览区域 -->
+<section id="blog-preview" class="py-20 px-4 md:px-8 bg-apple-lightgray">
+    <div class="container mx-auto max-w-4xl">
+        <h2 class="text-3xl md:text-4xl font-bold mb-16 text-center reveal-element">{{ title }}</h2>
+
+        <!-- 板块选项卡 -->
+        <div class="flex flex-wrap justify-center gap-4 reveal-element" data-sr-delay="200">
+            {% for category in categories %}
+            <button onclick="switchBlogCategory('{{ category.id }}')"
+                    id="blog-tab-{{ category.id }}"
+                    class="blog-category-tab px-6 py-3 rounded-full bg-white border-2 border-gray-200 hover:border-apple-hover hover:bg-apple-hover hover:text-white transition-all {{ 'bg-apple-hover text-white border-apple-hover active' if loop.first else '' }}">
+                <i class="fa-solid {{ category.icon }} mr-2"></i>
+                {{ category.name }}
+            </button>
+            {% endfor %}
+        </div>
+
+        <!-- 代表性文章卡片区域 -->
+        <div id="featured-cards-container" class="mt-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {% for card in featured_cards %}
+                {% set card_delay = loop.index * 200 %}
+                {% include 'components/card.html' %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- 板块描述区域 -->
+        <div class="text-center mt-8 reveal-element" data-sr-delay="300">
+            <div id="blog-category-description" class="bg-white rounded-xl p-6 max-w-2xl mx-auto shadow-sm">
+                <p class="text-apple-gray italic">选择上方板块标签，浏览不同主题的文章内容</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- JavaScript for blog category switching -->
+<script>
+let currentBlogCategory = '';
+
+function switchBlogCategory(categoryId) {
+    currentBlogCategory = categoryId;
+
+    // 更新选项卡样式
+    document.querySelectorAll('.blog-category-tab').forEach(tab => {
+        tab.classList.remove('bg-apple-hover', 'text-white', 'border-apple-hover', 'active');
+        tab.classList.add('bg-white', 'border-gray-200');
+    });
+
+    // 高亮当前选项卡
+    const activeTab = document.getElementById(`blog-tab-${categoryId}`);
+    if (activeTab) {
+        activeTab.classList.remove('bg-white', 'border-gray-200');
+        activeTab.classList.add('bg-apple-hover', 'text-white', 'border-apple-hover', 'active');
+    }
+
+    // 更新卡片区域和描述区域
+    updateCategoryContent(categoryId);
+
+    console.log('切换到博客板块:', categoryId);
+}
+
+function updateCategoryContent(categoryId) {
+    const category = blogCategories.find(c => c.id === categoryId);
+    const descriptionDiv = document.getElementById('blog-category-description');
+    const cardsContainer = document.getElementById('featured-cards-container');
+
+    if (descriptionDiv && category) {
+        // 技术分享分类显示卡片，其他分类显示提示
+        if (categoryId === '技术分享') {
+            descriptionDiv.innerHTML = `
+                <h3 class="text-lg font-semibold mb-2">${category.name}</h3>
+                <p class="text-gray-600">${category.description}</p>
+                <div class="mt-4">
+                    <span class="text-sm text-green-600">📚 查看下方精选文章</span>
+                </div>
+            `;
+            // 显示卡片容器
+            if (cardsContainer) {
+                cardsContainer.style.display = 'block';
+            }
+        } else {
+            descriptionDiv.innerHTML = `
+                <h3 class="text-lg font-semibold mb-2">${category.name}</h3>
+                <p class="text-gray-600">${category.description}</p>
+                <div class="mt-4">
+                    <span class="text-sm text-gray-500">该板块的博客文章正在准备中，敬请期待！</span>
+                </div>
+            `;
+            // 隐藏卡片容器
+            if (cardsContainer) {
+                cardsContainer.style.display = 'none';
+            }
+        }
+    }
+}
+
+// 全局变量存储分类数据
+const blogCategories = JSON.parse('{{ categories|tojson|safe }}');
+
+// 初始化
+document.addEventListener('DOMContentLoaded', function() {
+    // 默认选中第一个板块
+    const firstCategory = blogCategories[0];
+    if (firstCategory) {
+        switchBlogCategory(firstCategory.id);
+    }
+});
+</script>

@@ -101,7 +101,7 @@
         <div class="hidden md:flex space-x-8">
             <a href="#home" class="text-apple-black hover:text-apple-hover transition-colors">齐悦然</a>
             <a href="resume/index.html" class="text-apple-black hover:text-apple-hover transition-colors">个人简历</a>
-            <a href="#blog" class="text-apple-black hover:text-apple-hover transition-colors">博客</a>
+            <a href="#blog" class="text-apple-black hover:text-apple-hover transition-colors">个人博客</a>
         </div>
 
         <!-- 移动端汉堡菜单 -->
@@ -115,7 +115,7 @@
         <div class="container mx-auto px-4 flex flex-col space-y-4">
             <a href="#home" class="text-apple-black hover:text-apple-hover transition-colors py-2">齐悦然</a>
             <a href="resume/index.html" class="text-apple-black hover:text-apple-hover transition-colors py-2">个人简历</a>
-            <a href="#blog" class="text-apple-black hover:text-apple-hover transition-colors py-2">博客</a>
+            <a href="#blog" class="text-apple-black hover:text-apple-hover transition-colors py-2">个人博客</a>
         </div>
     </div>
 </nav>
@@ -200,7 +200,188 @@
             </a>
         </div>
     </div>
+</section><!-- 博客预览区域 -->
+<section id="blog-preview" class="py-20 px-4 md:px-8 bg-apple-lightgray">
+    <div class="container mx-auto max-w-4xl">
+        <h2 class="text-3xl md:text-4xl font-bold mb-16 text-center reveal-element">个人博客</h2>
+
+        <!-- 板块选项卡 -->
+        <div class="flex flex-wrap justify-center gap-4 reveal-element" data-sr-delay="200">
+            <button onclick="switchBlogCategory('经济与金融')"
+                    id="blog-tab-经济与金融"
+                    class="blog-category-tab px-6 py-3 rounded-full bg-white border-2 border-gray-200 hover:border-apple-hover hover:bg-apple-hover hover:text-white transition-all bg-apple-hover text-white border-apple-hover active">
+                <i class="fa-solid fa-chart-line mr-2"></i>
+                经济与金融
+            </button>
+            <button onclick="switchBlogCategory('随想')"
+                    id="blog-tab-随想"
+                    class="blog-category-tab px-6 py-3 rounded-full bg-white border-2 border-gray-200 hover:border-apple-hover hover:bg-apple-hover hover:text-white transition-all ">
+                <i class="fa-solid fa-brain mr-2"></i>
+                随想录
+            </button>
+            <button onclick="switchBlogCategory('技术分享')"
+                    id="blog-tab-技术分享"
+                    class="blog-category-tab px-6 py-3 rounded-full bg-white border-2 border-gray-200 hover:border-apple-hover hover:bg-apple-hover hover:text-white transition-all ">
+                <i class="fa-solid fa-code mr-2"></i>
+                技术分享
+            </button>
+        </div>
+
+        <!-- 代表性文章卡片区域 -->
+        <div id="featured-cards-container" class="mt-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- 通用卡片组件模板 -->
+<div class="card-hover bg-apple-card-gradient rounded-xl overflow-hidden reveal-element"
+     data-sr-delay="0">
+
+    <!-- 图片区域（可选） -->
+    <div class="relative overflow-hidden">
+        <img src="data/blog/技术分享/数据总线/cover.png"
+             alt="数据总线架构设计与实践"
+             class="w-full h-48 object-cover transition-transform duration-300 hover:scale-105">
+
+        <!-- 徽章（可选） -->
+
+        <!-- 类型标识（可选） -->
+        <span class="absolute top-3 left-3 bg-blue-500 text-white text-xs px-2 py-1 rounded-full">
+            <i class="fa-solid fa-book-open mr-1"></i>博客
+        </span>
+    </div>
+
+    <div class="p-6">
+        <!-- 头部信息区域 -->
+        <div class="flex justify-between items-start mb-3">
+            <!-- 日期或分类 -->
+            <span class="text-apple-gray text-sm">
+                    2025-01-15
+            </span>
+
+            <!-- 阅读时间（博客专用） -->
+        </div>
+
+        <!-- 标题 -->
+        <h3 class="text-xl font-semibold mb-3 hover:text-apple-hover transition-colors">
+            <a href="blog/技术分享/数据总线/content.html" class="block">数据总线架构设计与实践</a>
+        </h3>
+
+        <!-- 摘要/描述 -->
+        <p class="text-apple-gray mb-4 leading-relaxed">
+                深入探讨数据总线架构的核心设计原则，实现高可用、高性能的数据流转系统...
+        </p>
+
+        <!-- 标签区域（可选） -->
+        <div class="flex flex-wrap gap-2 mb-4">
+            <span class="bg-apple-lightgray text-apple-gray text-xs px-2 py-1 rounded-md">
+                架构设计
+            </span>
+            <span class="bg-apple-lightgray text-apple-gray text-xs px-2 py-1 rounded-md">
+                数据总线
+            </span>
+            <span class="bg-apple-lightgray text-apple-gray text-xs px-2 py-1 rounded-md">
+                微服务
+            </span>
+            <span class="text-apple-gray text-xs px-2 py-1">
+                +1
+            </span>
+        </div>
+
+        <!-- 底部操作区域 -->
+        <div class="flex justify-between items-center pt-3 border-t border-gray-100">
+            <!-- 主操作链接 -->
+            <a href="blog/技术分享/数据总线/content.html"
+               class="text-apple-hover font-medium flex items-center hover:text-[#0077ED] transition-colors">
+                查看详情
+                <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
+            </a>
+
+            <!-- 外部链接（项目专用） -->
+        </div>
+    </div>
+</div>            </div>
+        </div>
+
+        <!-- 板块描述区域 -->
+        <div class="text-center mt-8 reveal-element" data-sr-delay="300">
+            <div id="blog-category-description" class="bg-white rounded-xl p-6 max-w-2xl mx-auto shadow-sm">
+                <p class="text-apple-gray italic">选择上方板块标签，浏览不同主题的文章内容</p>
+            </div>
+        </div>
+    </div>
 </section>
+
+<!-- JavaScript for blog category switching -->
+<script>
+let currentBlogCategory = '';
+
+function switchBlogCategory(categoryId) {
+    currentBlogCategory = categoryId;
+
+    // 更新选项卡样式
+    document.querySelectorAll('.blog-category-tab').forEach(tab => {
+        tab.classList.remove('bg-apple-hover', 'text-white', 'border-apple-hover', 'active');
+        tab.classList.add('bg-white', 'border-gray-200');
+    });
+
+    // 高亮当前选项卡
+    const activeTab = document.getElementById(`blog-tab-${categoryId}`);
+    if (activeTab) {
+        activeTab.classList.remove('bg-white', 'border-gray-200');
+        activeTab.classList.add('bg-apple-hover', 'text-white', 'border-apple-hover', 'active');
+    }
+
+    // 更新卡片区域和描述区域
+    updateCategoryContent(categoryId);
+
+    console.log('切换到博客板块:', categoryId);
+}
+
+function updateCategoryContent(categoryId) {
+    const category = blogCategories.find(c => c.id === categoryId);
+    const descriptionDiv = document.getElementById('blog-category-description');
+    const cardsContainer = document.getElementById('featured-cards-container');
+
+    if (descriptionDiv && category) {
+        // 技术分享分类显示卡片，其他分类显示提示
+        if (categoryId === '技术分享') {
+            descriptionDiv.innerHTML = `
+                <h3 class="text-lg font-semibold mb-2">${category.name}</h3>
+                <p class="text-gray-600">${category.description}</p>
+                <div class="mt-4">
+                    <span class="text-sm text-green-600">📚 查看下方精选文章</span>
+                </div>
+            `;
+            // 显示卡片容器
+            if (cardsContainer) {
+                cardsContainer.style.display = 'block';
+            }
+        } else {
+            descriptionDiv.innerHTML = `
+                <h3 class="text-lg font-semibold mb-2">${category.name}</h3>
+                <p class="text-gray-600">${category.description}</p>
+                <div class="mt-4">
+                    <span class="text-sm text-gray-500">该板块的博客文章正在准备中，敬请期待！</span>
+                </div>
+            `;
+            // 隐藏卡片容器
+            if (cardsContainer) {
+                cardsContainer.style.display = 'none';
+            }
+        }
+    }
+}
+
+// 全局变量存储分类数据
+const blogCategories = JSON.parse('[{"description": "\u6295\u8d44\u7406\u8d22\u3001\u7ecf\u6d4e\u5b66\u601d\u8003", "icon": "fa-chart-line", "id": "\u7ecf\u6d4e\u4e0e\u91d1\u878d", "name": "\u7ecf\u6d4e\u4e0e\u91d1\u878d"}, {"description": "\u751f\u6d3b\u611f\u609f\u3001\u4e2a\u4eba\u601d\u8003", "icon": "fa-brain", "id": "\u968f\u60f3", "name": "\u968f\u60f3\u5f55"}, {"description": "\u7f16\u7a0b\u6280\u672f\u3001\u5f00\u53d1\u7ecf\u9a8c", "icon": "fa-code", "id": "\u6280\u672f\u5206\u4eab", "name": "\u6280\u672f\u5206\u4eab"}]');
+
+// 初始化
+document.addEventListener('DOMContentLoaded', function() {
+    // 默认选中第一个板块
+    const firstCategory = blogCategories[0];
+    if (firstCategory) {
+        switchBlogCategory(firstCategory.id);
+    }
+});
+</script>
 
     <!-- 页脚 -->
     <!-- 页脚（苹果风格） -->

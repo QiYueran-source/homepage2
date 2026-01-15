@@ -1,0 +1,113 @@
+<!-- 通用卡片组件模板 -->
+<div class="card-hover bg-apple-card-gradient rounded-xl overflow-hidden reveal-element"
+     data-sr-delay="{{ delay|default(0) }}">
+
+    <!-- 图片区域（可选） -->
+    {% if card.image %}
+    <div class="relative overflow-hidden">
+        <img src="{{ card.image }}"
+             alt="{{ card.title }}"
+             class="w-full h-48 object-cover transition-transform duration-300 hover:scale-105">
+
+        <!-- 徽章（可选） -->
+        {% if card.badge %}
+        <span class="absolute top-3 right-3 bg-apple-hover text-white text-xs px-2 py-1 rounded-full font-medium">
+            {{ card.badge }}
+        </span>
+        {% endif %}
+
+        <!-- 类型标识（可选） -->
+        {% if card.type == 'blog' %}
+        <span class="absolute top-3 left-3 bg-blue-500 text-white text-xs px-2 py-1 rounded-full">
+            <i class="fa-solid fa-book-open mr-1"></i>博客
+        </span>
+        {% elif card.type == 'project' %}
+        <span class="absolute top-3 left-3 bg-green-500 text-white text-xs px-2 py-1 rounded-full">
+            <i class="fa-solid fa-code mr-1"></i>项目
+        </span>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <div class="p-6">
+        <!-- 头部信息区域 -->
+        <div class="flex justify-between items-start mb-3">
+            <!-- 日期或分类 -->
+            <span class="text-apple-gray text-sm">
+                {% if card.date %}
+                    {{ card.date }}
+                {% elif card.category %}
+                    {{ card.category }}
+                {% endif %}
+            </span>
+
+            <!-- 阅读时间（博客专用） -->
+            {% if card.read_time %}
+            <span class="text-apple-gray text-sm flex items-center">
+                <i class="fa-solid fa-clock mr-1"></i>
+                {{ card.read_time }}min
+            </span>
+            {% endif %}
+        </div>
+
+        <!-- 标题 -->
+        <h3 class="text-xl font-semibold mb-3 hover:text-apple-hover transition-colors">
+            {% if card.url %}
+            <a href="{{ card.url }}" class="block">{{ card.title }}</a>
+            {% else %}
+            {{ card.title }}
+            {% endif %}
+        </h3>
+
+        <!-- 摘要/描述 -->
+        <p class="text-apple-gray mb-4 leading-relaxed">
+            {% if card.summary %}
+                {{ card.summary }}
+            {% elif card.description %}
+                {{ card.description }}
+            {% endif %}
+        </p>
+
+        <!-- 标签区域（可选） -->
+        {% if card.tags and card.tags|length > 0 %}
+        <div class="flex flex-wrap gap-2 mb-4">
+            {% for tag in card.tags[:3] %}
+            <span class="bg-apple-lightgray text-apple-gray text-xs px-2 py-1 rounded-md">
+                {{ tag }}
+            </span>
+            {% endfor %}
+            {% if card.tags|length > 3 %}
+            <span class="text-apple-gray text-xs px-2 py-1">
+                +{{ card.tags|length - 3 }}
+            </span>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <!-- 底部操作区域 -->
+        <div class="flex justify-between items-center pt-3 border-t border-gray-100">
+            <!-- 主操作链接 -->
+            {% if card.url %}
+            <a href="{{ card.url }}"
+               class="text-apple-hover font-medium flex items-center hover:text-[#0077ED] transition-colors">
+                {{ card.link_text or '查看详情' }}
+                <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
+            </a>
+            {% endif %}
+
+            <!-- 外部链接（项目专用） -->
+            {% if card.external_links %}
+            <div class="flex gap-3">
+                {% for link in card.external_links %}
+                <a href="{{ link.url }}"
+                   target="_blank"
+                   class="text-apple-gray hover:text-apple-hover transition-colors"
+                   title="{{ link.title or link.icon }}">
+                    <i class="fa-brands {{ link.icon }} text-lg"></i>
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

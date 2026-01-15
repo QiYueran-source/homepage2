@@ -97,8 +97,11 @@ def load_config():
                 section_frame = load_frame_config(section)
                 nav_title = section_frame.get('nav_title')
                 if nav_title:
-                    # 对于简历页面，使用实际的页面路径
-                    href = "resume/index.html" if section == "resume" else f"#{section}"
+                    # 为不同页面设置正确的路径
+                    if section == "resume":
+                        href = "resume/index.html"
+                    else:
+                        href = f"#{section}"
                     nav_items.append({
                         "id": section,
                         "title": nav_title,

@@ -59,8 +59,7 @@ def main():
     tasks = {
         "home": "scripts.home.generator.generate_home_html",
         "resume": "scripts.sections.resume.generator.generate_resume_page",
-        # 未来可以添加更多任务
-        # "blog": "gen_blog",
+        "blog": "scripts.blog.generator.scan_and_generate_blog",
     }
 
     # 处理默认值和验证

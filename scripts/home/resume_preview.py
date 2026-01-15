@@ -41,7 +41,7 @@ def generate_resume_preview_html():
         print("无法加载简历配置数据")
         return ""
 
-    template = env.get_template('resume_preview.html')
+    template = env.get_template('home/resume_preview.html')
     return template.render(**resume_config)
 
 if __name__ == "__main__":

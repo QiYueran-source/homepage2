@@ -71,10 +71,14 @@ def generate_home_html():
     from .resume_preview import generate_resume_preview_html
     resume_preview_html = generate_resume_preview_html()
 
+    # 调用博客预览模块
+    from .blog_preview import generate_blog_preview_html
+    blog_preview_html = generate_blog_preview_html()
+
     footer_html = generate_footer_html(env, config)
 
     # 组合内容HTML
-    content_html = hero_html + resume_preview_html
+    content_html = hero_html + resume_preview_html + blog_preview_html
 
     # 渲染完整页面
     base_template = env.get_template('base.html')
