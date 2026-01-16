@@ -39,8 +39,9 @@ def prepare_card_data(card_data, category_name, article_name):
             # 如果是URL，直接使用
             card['image'] = card['image']
         else:
-            # 如果是本地文件，改为相对路径
-            card['image'] = f"./{card['image']}"
+            # 如果是本地文件，确保是正确的相对路径
+            if not card['image'].startswith('./'):
+                card['image'] = f"./{card['image']}"
 
     # 生成内容页面URL（相对于文章目录）
     card['content_url'] = f"content.html"
@@ -232,6 +233,13 @@ def generate_category_pages():
     for category in blog_config.get('categories', []):
         # 获取该分类的所有文章
         category_cards = get_all_cards_for_category(category['id'])
+
+        # 为分类页面调整图片路径（相对于分类页面）
+        for card in category_cards:
+            if card.get('image') and not card['image'].startswith('http'):
+                if card['image'].startswith('./'):
+                    image_name = card['image'][2:]  # 移除 ./
+                    card['image'] = f"{card['article_name']}/{image_name}"
 
         if not category_cards:
             print(f"⚠️ 分类 '{category['name']}' 没有文章，跳过")

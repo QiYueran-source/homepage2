@@ -108,11 +108,26 @@ def generate_blog_preview_html():
     all_featured_cards = {}
     for category in blog_config.get('categories', []):
         result = get_all_cards_for_category(category['id'])
-        all_featured_cards[category['id']] = result
+        cards = result['cards']  # 获取实际的卡片列表
+
+        # 为主页预览调整图片路径
+        for card in cards:
+            if card.get('image') and not card['image'].startswith('http'):
+                if card['image'].startswith('./'):
+                    image_name = card['image'][2:]  # 移除 ./
+                    card['image'] = f"blog/{category['id']}/{card['article_name']}/{image_name}"
+
+        # 保存完整的返回结果（包含统计信息）
+        all_featured_cards[category['id']] = {
+            'cards': cards,
+            'total': result['total'],
+            'has_more': result['has_more']
+        }
 
     # 默认显示第一个分类的卡片
     first_category_id = blog_config.get('categories', [{}])[0].get('id')
-    featured_cards = all_featured_cards.get(first_category_id, [])
+    first_category_data = all_featured_cards.get(first_category_id, {})
+    featured_cards = first_category_data.get('cards', []) if isinstance(first_category_data, dict) else []
 
     template = env.get_template('home/blog_preview.html')
     return template.render(
