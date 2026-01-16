@@ -8,6 +8,7 @@
 import argparse
 import subprocess
 import sys
+import shutil
 from pathlib import Path
 
 def run_script(script_name, *args):
@@ -39,6 +40,26 @@ def run_script(script_name, *args):
     except Exception as e:
         print(f"❌ {script_name} 生成失败：{e}")
         return False
+
+def clean_html_dirs():
+    """清理HTML目录下的动态生成内容，确保与data目录完全同步"""
+    html_dir = Path(__file__).parent / "html"
+
+    # 需要清理的目录（对应各个模块）
+    dirs_to_clean = ["blog", "project", "docs", "contact", "resume"]
+
+    cleaned_count = 0
+    for dir_name in dirs_to_clean:
+        target_dir = html_dir / dir_name
+        if target_dir.exists():
+            shutil.rmtree(target_dir)
+            print(f"🗑️ 已清理: {target_dir}")
+            cleaned_count += 1
+
+    if cleaned_count > 0:
+        print(f"✅ 清理完成，共清理了 {cleaned_count} 个目录")
+    else:
+        print("ℹ️ 无需清理，所有目录都是干净的")
 
 def main():
     parser = argparse.ArgumentParser(description="统一页面生成器")
@@ -81,7 +102,14 @@ def main():
 
     if "all" in targets:
         targets = list(tasks.keys())
-    
+
+    # 在生成之前清理HTML目录（只清理会生成内容的模块）
+    modules_to_clean = ["blog", "project", "docs", "contact", "resume"]
+    if any(target in modules_to_clean for target in targets):
+        print("🧹 开始清理HTML目录...")
+        clean_html_dirs()
+        print()
+
     for target in targets:
         if target in tasks:
             total_count += 1
