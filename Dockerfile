@@ -25,8 +25,8 @@ COPY nginx.conf /etc/nginx/nginx.conf
 # 复制生成的静态文件到Nginx目录
 COPY --from=builder /app/html /usr/share/nginx/html
 
-# 暴露端口8081
-EXPOSE 8081
+# 暴露端口
+EXPOSE 83
 
 # 启动Nginx
 CMD ["nginx", "-g", "daemon off;"]

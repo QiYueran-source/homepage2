@@ -72,7 +72,7 @@ docker-compose --profile preview down
 ## 🌐 访问服务
 
 - **开发预览**: http://localhost:8000 (本地HTTP服务器)
-- **生产预览**: http://localhost:8081 (Nginx容器)
+- **生产预览**: http://localhost:8081 (公网端口，内部转发到容器80端口)
 
 ## 🔄 工作流程
 

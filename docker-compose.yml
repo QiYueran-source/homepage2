@@ -4,10 +4,10 @@ services:
   homepage:
     build: .
     ports:
-      - "8081:8081"
+      - "8081:83"
     restart: unless-stopped
     environment:
-      - NGINX_PORT=8081
+      - NGINX_PORT=83
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8081/"]
       interval: 30s

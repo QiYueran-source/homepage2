@@ -32,7 +32,7 @@ python -m http.server 8000 -d html
 
 ## 🌐 访问网站
 
-- Docker部署: `http://localhost:8081`
+- Docker部署: `http://localhost:8081` (公网端口，内部转发到容器80端口)
 - 本地开发: `http://localhost:8000`
 
 访问根路径会自动显示主页（home.html）。
