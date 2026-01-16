@@ -37,8 +37,9 @@ def prepare_card_data(card_data, category_id, article_name):
             # 如果是URL，直接使用
             card['image'] = card['image']
         else:
-            # 如果是本地文件，改为相对路径
-            card['image'] = f"./{card['image']}"
+            # 如果是本地文件，确保是正确的相对路径
+            if not card['image'].startswith('./'):
+                card['image'] = f"./{card['image']}"
 
     # 生成内容页面URL
     card['content_url'] = f"content.html"
@@ -92,7 +93,8 @@ def get_all_projects():
 
                         card_data['description'] = description
                         card_data['project_path'] = project_dir_item.name
-                        # 准备卡片数据
+
+                        # 准备卡片数据（保持原始图片路径）
                         prepared_card = prepare_card_data(card_data, 'project', project_dir_item.name)
                         projects.append(prepared_card)
 
@@ -227,6 +229,13 @@ def scan_and_generate_projects():
         except Exception as e:
             print(f"❌ 生成失败: {e}")
 
+    # 生成项目列表页面
+    if total_projects > 0:
+        try:
+            generate_project_list_page()
+        except Exception as e:
+            print(f"❌ 生成项目列表页面失败: {e}")
+
     # 输出统计信息
     print("📊 生成统计:")
     print(f"   发现项目: {total_projects}")
@@ -256,6 +265,12 @@ def generate_project_list_page():
 
     # 获取所有项目
     projects = get_all_projects()
+
+    # 为项目列表页面调整图片路径（移除./前缀）
+    for project in projects:
+        if project.get('image') and not project['image'].startswith('http'):
+            if project['image'].startswith('./'):
+                project['image'] = project['image'][2:]  # 移除 ./
 
     if not projects:
         print("⚠️ 没有项目数据")
@@ -295,6 +310,13 @@ def generate_projects_preview_html():
 
     # 限制预览数量（类似博客的3篇）
     preview_projects = all_projects[:3]
+
+    # 为主页预览调整图片路径
+    for project in preview_projects:
+        if project.get('image') and not project['image'].startswith('http'):
+            if project['image'].startswith('./'):
+                image_name = project['image'][2:]  # 移除 ./
+                project['image'] = f"project/{project['project_path']}/{image_name}"
 
     template = env.get_template('home/project_preview.html')
     return template.render(
