@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  dev:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    volumes:
+      # 挂载整个项目目录到容器
+      - ..:/workspaces:cached
+    working_dir: /workspaces
+    command: sleep infinity
+
+    # 网络配置 - 连接到homepage服务
+    networks:
+      - default
+    depends_on:
+      - homepage
+
+    # 环境变量
+    environment:
+      - PYTHONPATH=/workspaces
+      - PYTHONUNBUFFERED=1
+      - DEBIAN_FRONTEND=noninteractive
+
+  # 保留原有的homepage服务用于预览
+  homepage:
+    extends:
+      file: ../docker-compose.yml
+      service: homepage
+    profiles:
+      - preview
