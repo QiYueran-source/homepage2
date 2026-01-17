@@ -7,7 +7,7 @@
 from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 import json
-import markdown
+from scripts.common.mdconfig import markdown_to_html
 
 def setup_template_env():
     """设置 Jinja2 模板环境"""
@@ -122,8 +122,7 @@ def generate_project_detail_page(project):
     }
 
     # 处理内容
-    import markdown
-    html_content = markdown.markdown(project.get('description', ''), extensions=['extra', 'codehilite', 'toc'])
+    html_content = markdown_to_html(project.get('description', ''))
 
     html_output = template.render(
         card=article_data,
@@ -197,11 +196,10 @@ def scan_and_generate_projects():
             # 处理内容文件
             if content_file.exists():
                 # 读取并转换Markdown
-                import markdown
                 with open(content_file, 'r', encoding='utf-8') as f:
                     md_content = f.read()
 
-                html_content = markdown.markdown(md_content, extensions=['extra', 'codehilite', 'toc'])
+                html_content = markdown_to_html(md_content)
 
                 # 生成项目HTML
                 project_html = generate_project_html(prepared_card, html_content)
