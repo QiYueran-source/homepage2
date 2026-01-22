@@ -10,6 +10,31 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- 引入ScrollReveal实现滚动渐显动画 -->
     <script src="https://unpkg.com/scrollreveal@4.0.9/dist/scrollreveal.min.js"></script>
+    <!-- 引入MathJax用于渲染数学公式 -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                ignoreHtmlClass: '.*',
+                processHtmlClass: 'arithmatex'
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- 引入 Mermaid 用于渲染流程图 -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose'
+        });
+    </script>
 
     <!-- 自定义Tailwind配置（苹果官网配色） -->
     <script>
@@ -155,8 +180,22 @@
         <!-- 文章内容 -->
         <article class="bg-white rounded-xl shadow-sm p-8 md:p-12 article-content">
             <h1 id="_1">数据总线实现</h1>
-<h2 id="1">1.啥是数据总线</h2>
+<h2 id="1">1.数据总线简介</h2>
+<div class="arithmatex">\[
+\frac{1}{2}
+\]</div>
 <h2 id="2">2.数据片轮转</h2>
+<ul>
+<li>1.数据总线定义  </li>
+<li>2.数据轮转定义  </li>
+</ul>
+<div class="mermaid">graph TD
+    A[数据源] --&gt; B(数据总线)
+    B --&gt; C{分发模块}
+    C --&gt; D[处理器1]
+    C --&gt; E[处理器2]
+    D --&gt; F[存储单元]
+    E --&gt; F</div>
         </article>
 
     </div>

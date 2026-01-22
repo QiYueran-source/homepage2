@@ -10,6 +10,31 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- 引入ScrollReveal实现滚动渐显动画 -->
     <script src="https://unpkg.com/scrollreveal@4.0.9/dist/scrollreveal.min.js"></script>
+    <!-- 引入MathJax用于渲染数学公式 -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                ignoreHtmlClass: '.*',
+                processHtmlClass: 'arithmatex'
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- 引入 Mermaid 用于渲染流程图 -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose'
+        });
+    </script>
 
     <!-- 自定义Tailwind配置（苹果官网配色） -->
     <script>
@@ -201,7 +226,7 @@
 <li><strong>导出功能</strong>: 支持多种格式的结果导出</li>
 </ul>
 <h2 id="_15">智能合约设计</h2>
-<pre class="codehilite"><code class="language-solidity">// SPDX-License-Identifier: MIT
+<pre class="highlight"><code class="language-solidity">// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
 contract VotingSystem {
@@ -234,8 +259,8 @@ contract VotingSystem {
     }
 
     function register(address voter) public {
-        require(msg.sender == chairperson, &quot;Only chairperson can register voters&quot;);
-        require(!voters[voter].registered, &quot;Voter already registered&quot;);
+        require(msg.sender == chairperson, "Only chairperson can register voters");
+        require(!voters[voter].registered, "Voter already registered");
 
         voters[voter].registered = true;
         voters[voter].weight = 1;
@@ -243,9 +268,9 @@ contract VotingSystem {
 
     function vote(uint proposal) public {
         Voter storage sender = voters[msg.sender];
-        require(sender.weight != 0, &quot;Has no right to vote&quot;);
-        require(!sender.voted, &quot;Already voted&quot;);
-        require(proposal &lt; proposals.length, &quot;Invalid proposal&quot;);
+        require(sender.weight != 0, "Has no right to vote");
+        require(!sender.voted, "Already voted");
+        require(proposal &lt; proposals.length, "Invalid proposal");
 
         sender.voted = true;
         sender.vote = proposal;
@@ -265,9 +290,7 @@ contract VotingSystem {
     function winnerName() public view returns (string memory winnerName_) {
         winnerName_ = proposals[winningProposal()].name;
     }
-}
-</code></pre>
-
+}</code></pre>
 <h2 id="_16">项目成果</h2>
 <ul>
 <li><strong>安全性</strong>: 通过多项安全审计，零安全漏洞</li>

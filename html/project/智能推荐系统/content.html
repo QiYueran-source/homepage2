@@ -10,6 +10,31 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- 引入ScrollReveal实现滚动渐显动画 -->
     <script src="https://unpkg.com/scrollreveal@4.0.9/dist/scrollreveal.min.js"></script>
+    <!-- 引入MathJax用于渲染数学公式 -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                ignoreHtmlClass: '.*',
+                processHtmlClass: 'arithmatex'
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- 引入 Mermaid 用于渲染流程图 -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose'
+        });
+    </script>
 
     <!-- 自定义Tailwind配置（苹果官网配色） -->
     <script>
@@ -184,16 +209,14 @@
 </ul>
 <h2 id="_11">技术实现</h2>
 <h3 id="_12">推荐算法</h3>
-<pre class="codehilite"><code class="language-python">def collaborative_filtering(user_id, item_pool, k=10):
+<pre class="highlight"><code class="language-python">def collaborative_filtering(user_id, item_pool, k=10):
     # 协同过滤核心算法
     user_similarities = calculate_user_similarities(user_id)
     candidate_items = generate_candidates(user_similarities, item_pool)
     ranked_items = rank_by_score(candidate_items)
-    return ranked_items[:k]
-</code></pre>
-
+    return ranked_items[:k]</code></pre>
 <h3 id="_13">深度学习模型</h3>
-<pre class="codehilite"><code class="language-python">class NeuralCollaborativeFiltering(nn.Module):
+<pre class="highlight"><code class="language-python">class NeuralCollaborativeFiltering(nn.Module):
     def __init__(self, num_users, num_items, embedding_dim=64):
         super().__init__()
         self.user_embedding = nn.Embedding(num_users, embedding_dim)
@@ -211,9 +234,7 @@
         item_embed = self.item_embedding(item_ids)
         concat = torch.cat([user_embed, item_embed], dim=1)
         output = self.fc_layers(concat)
-        return output
-</code></pre>
-
+        return output</code></pre>
 <h2 id="_14">项目成果</h2>
 <ul>
 <li><strong>推荐准确率</strong>: NDCG@10 提升至0.78</li>
