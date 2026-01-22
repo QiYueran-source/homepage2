@@ -4,12 +4,12 @@ services:
   homepage:
     build: .
     ports:
-      - "8081:83"
+      - "${SERVER_PORT}:${NGINX_PORT}"
     restart: unless-stopped
     environment:
-      - NGINX_PORT=83
+        - PYTHONPATH=/app
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8081/"]
+      test: ["CMD", "curl", "-f", "http://localhost:${SERVER_PORT}/"]
       interval: 30s
       timeout: 10s
       retries: 3
