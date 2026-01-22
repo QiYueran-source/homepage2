@@ -1,3 +1,6 @@
+﻿# 以管理员权限运行执行权限  
+# set-executionpolicy remotesigned 
+
 # 配置（请修改）
 $SERVER = "user@server-ip"
 $REMOTE_PATH = "/path/to/server/project"
