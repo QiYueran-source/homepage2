@@ -9,7 +9,7 @@ from pathlib import Path
 import json
 import shutil
 from jinja2 import Environment, FileSystemLoader
-import markdown
+from scripts.common.mdconfig import markdown_to_html
 
 def setup_template_env():
     """设置 Jinja2 模板环境"""
@@ -130,10 +130,7 @@ def scan_and_generate_blog():
                     print(f"⚠️ 读取 {content_file} 失败: {e}")
 
             # 转换Markdown为HTML
-            html_content = markdown.markdown(
-                md_content,
-                extensions=['extra', 'codehilite', 'toc']
-            )
+            html_content = markdown_to_html(md_content)
 
             # 创建输出目录
             output_dir = output_root / category_name / article_name
