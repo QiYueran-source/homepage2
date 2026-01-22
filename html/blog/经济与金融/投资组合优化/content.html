@@ -10,6 +10,31 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- 引入ScrollReveal实现滚动渐显动画 -->
     <script src="https://unpkg.com/scrollreveal@4.0.9/dist/scrollreveal.min.js"></script>
+    <!-- 引入MathJax用于渲染数学公式 -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                ignoreHtmlClass: '.*',
+                processHtmlClass: 'arithmatex'
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- 引入 Mermaid 用于渲染流程图 -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose'
+        });
+    </script>
 
     <!-- 自定义Tailwind配置（苹果官网配色） -->
     <script>
@@ -160,15 +185,15 @@
 <h2 id="_2">核心概念</h2>
 <h3 id="1">1. 预期收益</h3>
 <p>投资组合的预期收益是各资产收益的加权平均：</p>
-<p>$$E(R_p) = \sum_{i=1}^{n} w_i E(R_i)$$</p>
-<p>其中 $w_i$ 是资产i的权重，$E(R_i)$ 是资产i的预期收益。</p>
+<div class="arithmatex">\[E(R_p) = \sum_{i=1}^{n} w_i E(R_i)\]</div>
+<p>其中 <span class="arithmatex">\(w_i\)</span> 是资产i的权重，<span class="arithmatex">\(E(R_i)\)</span> 是资产i的预期收益。</p>
 <h3 id="2">2. 投资风险</h3>
 <p>使用方差衡量投资组合的波动性：</p>
-<p>$$\sigma_p^2 = \sum_{i=1}^{n} \sum_{j=1}^{n} w_i w_j \sigma_{ij}$$</p>
+<div class="arithmatex">\[\sigma_p^2 = \sum_{i=1}^{n} \sum_{j=1}^{n} w_i w_j \sigma_{ij}\]</div>
 <h3 id="3">3. 相关性</h3>
 <p>资产之间的相关系数决定了分散风险的效果。</p>
 <h2 id="python_1">Python实现</h2>
-<pre class="codehilite"><code class="language-python">import numpy as np
+<pre class="highlight"><code class="language-python">import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from scipy.optimize import minimize
@@ -181,9 +206,7 @@ def portfolio_performance(weights, mean_returns, cov_matrix):
 
 # 最小化方差的优化函数
 def minimize_volatility(weights, mean_returns, cov_matrix):
-    return portfolio_performance(weights, mean_returns, cov_matrix)[1]
-</code></pre>
-
+    return portfolio_performance(weights, mean_returns, cov_matrix)[1]</code></pre>
 <h2 id="_3">实际应用</h2>
 <p>通过Python可以实现：
 - 有效前沿计算

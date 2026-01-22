@@ -3,13 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>测试博客文章 - 个人博客</title>
+    <title>数据总线架构设计与实践 - 个人博客</title>
     <!-- 引入Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- 引入Font Awesome图标 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- 引入ScrollReveal实现滚动渐显动画 -->
     <script src="https://unpkg.com/scrollreveal@4.0.9/dist/scrollreveal.min.js"></script>
+    <!-- 引入MathJax用于渲染数学公式 -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                ignoreHtmlClass: '.*',
+                processHtmlClass: 'arithmatex'
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- 引入 Mermaid 用于渲染流程图 -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose'
+        });
+    </script>
 
     <!-- 自定义Tailwind配置（苹果官网配色） -->
     <script>
@@ -102,12 +127,12 @@
                 </a>
 
                 <div class="flex items-center space-x-4">
-                    <a href="../.html" class="text-apple-hover hover:text-[#0077ED] flex items-center transition-colors">
+                    <a href="../技术分享.html" class="text-apple-hover hover:text-[#0077ED] flex items-center transition-colors">
                         <i class="fa-solid fa-arrow-left mr-2"></i>
-                        
+                        技术分享
                     </a>
                     <span class="text-apple-gray text-sm hidden md:block">
-                         · 2025-01-25
+                        技术分享 · 2025-01-15
                     </span>
                 </div>
             </div>
@@ -121,42 +146,56 @@
         <header class="mb-8">
             <!-- 分类和日期 -->
             <div class="flex items-center gap-4 text-sm text-apple-gray mb-4">
-                <span class="bg-apple-lightgray px-3 py-1 rounded-full"></span>
-                <span>2025-01-25</span>
+                <span class="bg-apple-lightgray px-3 py-1 rounded-full">技术分享</span>
+                <span>2025-01-15</span>
             </div>
 
             <!-- 文章标题 -->
             <h1 class="text-3xl md:text-4xl font-bold text-apple-black mb-4 leading-tight">
-                测试博客文章
+                数据总线架构设计与实践
             </h1>
 
             <!-- 文章摘要 -->
             <p class="text-lg text-apple-gray leading-relaxed">
-                这是一个测试博客文章，用于验证生成系统是否正常工作
+                深入探讨数据总线架构的核心设计原则，实现高可用、高性能的数据流转系统...
             </p>
 
             <!-- 标签 -->
             <div class="flex flex-wrap gap-2 mt-4">
                 <span class="bg-apple-lightgray text-apple-gray text-sm px-3 py-1 rounded-full">
-                    <i class="fa-solid fa-tag mr-1"></i>测试
+                    <i class="fa-solid fa-tag mr-1"></i>架构设计
                 </span>
                 <span class="bg-apple-lightgray text-apple-gray text-sm px-3 py-1 rounded-full">
-                    <i class="fa-solid fa-tag mr-1"></i>博客
+                    <i class="fa-solid fa-tag mr-1"></i>数据总线
+                </span>
+                <span class="bg-apple-lightgray text-apple-gray text-sm px-3 py-1 rounded-full">
+                    <i class="fa-solid fa-tag mr-1"></i>微服务
+                </span>
+                <span class="bg-apple-lightgray text-apple-gray text-sm px-3 py-1 rounded-full">
+                    <i class="fa-solid fa-tag mr-1"></i>高可用
                 </span>
             </div>
         </header>
 
         <!-- 文章内容 -->
         <article class="bg-white rounded-xl shadow-sm p-8 md:p-12 article-content">
-            <h1 id="_1">测试博客文章</h1>
-<p>这是一个测试博客文章，用于验证静态网站生成系统是否正常工作。</p>
-<h2 id="_2">测试内容</h2>
+            <h1 id="_1">数据总线实现</h1>
+<h2 id="1">1.数据总线简介</h2>
+<div class="arithmatex">\[
+\frac{1}{2}
+\]</div>
+<h2 id="2">2.数据片轮转</h2>
 <ul>
-<li>测试标题</li>
-<li>测试段落</li>
-<li>测试列表</li>
+<li>1.数据总线定义  </li>
+<li>2.数据轮转定义  </li>
 </ul>
-<p>这篇文章应该能够正确显示在主页和博客列表中。</p>
+<div class="mermaid">graph TD
+    A[数据源] --&gt; B(数据总线)
+    B --&gt; C{分发模块}
+    C --&gt; D[处理器1]
+    C --&gt; E[处理器2]
+    D --&gt; F[存储单元]
+    E --&gt; F</div>
         </article>
 
     </div>

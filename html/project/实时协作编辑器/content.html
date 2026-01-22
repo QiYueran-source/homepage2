@@ -10,6 +10,31 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- 引入ScrollReveal实现滚动渐显动画 -->
     <script src="https://unpkg.com/scrollreveal@4.0.9/dist/scrollreveal.min.js"></script>
+    <!-- 引入MathJax用于渲染数学公式 -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                ignoreHtmlClass: '.*',
+                processHtmlClass: 'arithmatex'
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- 引入 Mermaid 用于渲染流程图 -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose'
+        });
+    </script>
 
     <!-- 自定义Tailwind配置（苹果官网配色） -->
     <script>
@@ -182,7 +207,7 @@
 </ul>
 <h3 id="_10">实时同步算法</h3>
 <h4 id="operational-transformation-ot">Operational Transformation (OT)</h4>
-<pre class="codehilite"><code class="language-javascript">// 简化的OT算法示例
+<pre class="highlight"><code class="language-javascript">// 简化的OT算法示例
 class OperationalTransformation {
     constructor() {
         this.operations = [];
@@ -227,11 +252,9 @@ class OperationalTransformation {
         }
         // 其他操作类型的变换逻辑...
     }
-}
-</code></pre>
-
+}</code></pre>
 <h4 id="conflict-free-replicated-data-types-crdt">Conflict-free Replicated Data Types (CRDT)</h4>
-<pre class="codehilite"><code class="language-javascript">class CRDTText {
+<pre class="highlight"><code class="language-javascript">class CRDTText {
     constructor() {
         this.characters = [];
     }
@@ -275,9 +298,7 @@ class OperationalTransformation {
             .map(char =&gt; char.value)
             .join('');
     }
-}
-</code></pre>
-
+}</code></pre>
 <h2 id="_11">性能优化</h2>
 <h3 id="_12">前端优化</h3>
 <ul>
