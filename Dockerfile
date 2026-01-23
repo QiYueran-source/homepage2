@@ -13,6 +13,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # 复制项目文件
 COPY . .
 
+# 创建html目录
+RUN mkdir -p /app/html
+
 # 生成静态网站
 RUN python gen.py all
 
