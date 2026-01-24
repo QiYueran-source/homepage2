@@ -17,3 +17,5 @@ Write-Host "🔄 更新服务器..."
 ssh "$SERVER" "cd $REMOTE_PATH && ./update.sh"
 
 Write-Host "✅ 部署完成！"
+Write-Host "按任意键退出..." -NoNewline
+$null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
