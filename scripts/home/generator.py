@@ -40,7 +40,8 @@ def generate_footer_html(env, config):
     template = env.get_template('footer.html')
     return template.render(
         footer_text=config['footer_text'],
-        footer_tagline=config['footer_tagline']
+        footer_tagline=config['footer_tagline'],
+        icp_number=config.get('icp_number', '')  # ICP备案号
     )
 
 def generate_home_html():

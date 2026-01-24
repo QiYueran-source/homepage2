@@ -66,6 +66,7 @@ def load_config():
         'hero_button_link': '#resume',
         'footer_text': frame_config.get('footer_text', '© 2025 个人主页'),
         'footer_tagline': frame_config.get('footer_tagline', ''),
+        'icp_number': frame_config.get('icp_number', ''),
         'nav_items': []
     }
 
@@ -99,7 +100,14 @@ def load_config():
                 if nav_title:
                     # 为不同页面设置正确的路径
                     if section == "resume":
-                        href = "resume/index.html"
+                        # 简历指向主页的简历预览部分
+                        href = "#resume"
+                    elif section == "blog":
+                        # 博客指向主页的博客预览部分
+                        href = "#blog-preview"
+                    elif section == "project":
+                        # 项目指向主页的项目预览部分
+                        href = "#projects"
                     else:
                         href = f"#{section}"
                     nav_items.append({

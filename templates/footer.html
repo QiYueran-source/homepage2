@@ -5,5 +5,12 @@
         {% if footer_tagline %}
         <p class="mt-2">{{ footer_tagline }}</p>
         {% endif %}
+        {% if icp_number %}
+        <p class="mt-4 text-xs">
+            <a href="https://beian.miit.gov.cn" target="_blank" class="hover:text-apple-black transition-colors">
+                {{ icp_number }}
+            </a>
+        </p>
+        {% endif %}
     </div>
 </footer>
