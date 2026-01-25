@@ -197,6 +197,35 @@ def get_all_blog_cards():
 
     return cards
 
+def prepare_card_data_for_list(card_data, article_name):
+    """为博客列表页面准备卡片数据（使用相对路径）"""
+    card = card_data.copy()
+
+    # 处理图片路径
+    if card.get('image'):
+        if card['image'].startswith('http'):
+            # 如果是URL，直接使用
+            card['image'] = card['image']
+        else:
+            # 如果是本地文件，使用相对于博客列表页面的路径
+            if not card['image'].startswith('./'):
+                card['image'] = f"./{card['image']}"
+            # 为列表页面调整图片路径
+            if card['image'].startswith('./'):
+                image_name = card['image'][2:]  # 移除 ./
+                card['image'] = f"{article_name}/{image_name}"
+
+    # 为博客列表页面使用相对路径
+    card['url'] = f"{article_name}/content.html"
+
+    # 保存文章名称
+    card['article_name'] = article_name
+
+    # 设置卡片类型
+    card['type'] = 'blog'
+
+    return card
+
 def generate_blog_list_page():
     """生成统一的博客列表页面（显示所有博客文章）"""
     # 设置模板环境
@@ -213,23 +242,31 @@ def generate_blog_list_page():
     # 获取所有博客文章
     all_cards = get_all_blog_cards()
 
-    # 为博客列表页面调整图片路径
-    for card in all_cards:
-        if card.get('image') and not card['image'].startswith('http'):
-            if card['image'].startswith('./'):
-                image_name = card['image'][2:]  # 移除 ./
-                card['image'] = f"{card['article_name']}/{image_name}"
+    # 为博客列表页面重新准备卡片数据（使用相对路径）
+    prepared_cards = []
+    root_dir = Path(__file__).parent.parent.parent.parent
+    blog_dir = root_dir / "data" / "blog"
+
+    if blog_dir.exists():
+        for article_dir in blog_dir.iterdir():
+            if article_dir.is_dir() and not article_dir.name.startswith('.'):
+                card_file = article_dir / "card.json"
+                if card_file.exists():
+                    card_data = load_json_file(card_file)
+                    if card_data and card_data.get('status') == 'published':
+                        prepared_card = prepare_card_data_for_list(card_data, article_dir.name)
+                        prepared_cards.append(prepared_card)
+
+    # 按日期排序，最新的在前
+    prepared_cards.sort(key=lambda x: x.get('date', ''), reverse=True)
 
     template = env.get_template('sections/blog/all_content_page.html')
 
     # 准备模板数据
     template_data = {
         'frame': frame_config,
-        'category_name': '博客文章',
-        'category_description': '所有博客文章列表',
-        'category_icon': 'fa-blog',
-        'total_articles': len(all_cards),
-        'cards': all_cards
+        'total_articles': len(prepared_cards),
+        'cards': prepared_cards
     }
 
     # 生成HTML
@@ -242,7 +279,7 @@ def generate_blog_list_page():
     output_file = output_dir / "index.html"
     output_file.write_text(html_content, encoding='utf-8')
 
-    print(f"✅ 生成博客列表页面: 博客文章 ({len(all_cards)}篇文章)")
+    print(f"✅ 生成博客列表页面: 博客文章 ({len(prepared_cards)}篇文章)")
     print("📊 博客列表页面生成完成！")
 
 def generate_blog_page():
