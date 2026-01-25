@@ -1,24 +1,4 @@
 {
     "title": "个人博客",
-    "subtitle": "记录技术学习、生活感悟与投资思考",
-    "categories": [
-        {
-            "id": "经济与金融",
-            "name": "经济与金融",
-            "icon": "fa-chart-line",
-            "description": "投资理财、经济学思考"
-        },
-        {
-            "id": "随想",
-            "name": "随想录",
-            "icon": "fa-brain",
-            "description": "生活感悟、个人思考"
-        },
-        {
-            "id": "技术分享",
-            "name": "技术分享",
-            "icon": "fa-code",
-            "description": "编程技术、开发经验"
-        }
-    ]
+    "subtitle": "记录技术学习、生活感悟与投资思考"
 }
