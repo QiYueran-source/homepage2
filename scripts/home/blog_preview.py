@@ -36,28 +36,6 @@ def load_json_file(file_path):
         print(f"加载 {file_path} 失败: {e}")
         return None
 
-def prepare_card_data(card_data, article_path):
-    """准备卡片数据，处理路径"""
-    card = card_data.copy()
-
-    # 处理图片路径 - 指向复制后的图片位置
-    if card.get('image'):
-        if card['image'].startswith('http'):
-            # 如果是URL，直接使用
-            card['image'] = card['image']
-        else:
-            # 如果是本地文件，指向复制后的位置
-            card['image'] = f"blog/{article_path}/{card['image']}"
-
-    # 生成内容页面URL
-    card['url'] = f"blog/{article_path}/content.html"
-
-    # 设置卡片类型
-    card['type'] = 'blog'
-
-    return card
-
-
 def get_latest_blog_cards(limit=3):
     """获取最新的博客文章卡片（用于主页预览）"""
     root_dir = Path(__file__).parent.parent.parent
@@ -73,11 +51,12 @@ def get_latest_blog_cards(limit=3):
                 if card_file.exists():
                     card_data = load_json_file(card_file)
                     if card_data and card_data.get('status') == 'published':
-                        # 构建文章路径（直接使用文章名称，因为是扁平结构）
-                        article_path = article_dir.name
-                        # 准备卡片数据
-                        prepared_card = prepare_card_data(card_data, article_path)
-                        cards.append(prepared_card)
+                        # 复制原始数据并添加文章路径信息
+                        card = card_data.copy()
+                        card['article_path'] = article_dir.name
+                        card['url'] = f"blog/{article_dir.name}/content.html"
+                        card['type'] = 'blog'
+                        cards.append(card)
 
     # 按日期排序，最新的在前
     cards.sort(key=lambda x: x.get('date', ''), reverse=True)
@@ -109,9 +88,12 @@ def generate_blog_preview_html():
     # 为主页预览调整图片路径
     for card in latest_blogs['cards']:
         if card.get('image') and not card['image'].startswith('http'):
+            # 处理本地图片路径
             if card['image'].startswith('./'):
                 image_name = card['image'][2:]  # 移除 ./
-                card['image'] = f"blog/{card['article_name']}/{image_name}"
+            else:
+                image_name = card['image']  # 直接使用文件名
+            card['image'] = f"blog/{card['article_path']}/{image_name}"
 
     template = env.get_template('home/blog_preview.html')
     return template.render(
