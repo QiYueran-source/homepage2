@@ -3,62 +3,48 @@
     <div class="container mx-auto">
         <h2 class="text-3xl md:text-4xl font-bold mb-16 text-center reveal-element">{{ title }}</h2>
 
-        <!-- 博客分类区块 -->
-            {% for category in categories %}
-        <div class="category-section mb-20 reveal-element" data-sr-delay="{{ loop.index * 100 }}">
-            <!-- 分类标题 -->
-            <div class="text-center mb-12">
-                <h3 class="text-2xl md:text-3xl font-bold mb-4 flex items-center justify-center">
-                    <i class="fa-solid {{ category.icon }} mr-3 text-apple-hover"></i>
-                {{ category.name }}
-                </h3>
-                {% if category.description %}
-                <p class="text-gray-600 max-w-2xl mx-auto">{{ category.description }}</p>
-                {% endif %}
-        </div>
+        <!-- 博客展示区域 -->
+        <div class="reveal-element" data-sr-delay="200">
+            <h3 class="text-2xl font-semibold mb-12 text-center">最新文章</h3>
 
-            <!-- 分类文章卡片 -->
-            {% set category_data = all_featured_cards.get(category.id, {}) %}
-            {% set category_cards = category_data.get('cards', []) %}
-            {% set total_count = category_data.get('total', 0) %}
-            {% set has_more = category_data.get('has_more', False) %}
-            {% if category_cards %}
             <!-- 桌面端：网格布局 -->
             <div class="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {% for card in category_cards %}
-                {% set card_delay = loop.index * 200 %}
+                {% for blog in blogs %}
+                {% set delay = loop.index * 200 %}
+                {% set card = blog %}
                 {% include 'components/card.html' %}
                 {% endfor %}
             </div>
 
             <!-- 移动端：横向滑动布局 -->
             <div class="md:hidden">
-                <div class="horizontal-scroll-container" data-category="{{ category.id }}">
+                <div class="horizontal-scroll-container" data-category="blogs">
                     <div class="horizontal-scroll-content">
-                        {% for card in category_cards %}
-                        {% set card_delay = loop.index * 200 %}
+                        {% for blog in blogs %}
+                        {% set delay = loop.index * 200 %}
+                        {% set card = blog %}
                         <div class="horizontal-scroll-item">
                             {% include 'components/card.html' %}
                         </div>
-                {% endfor %}
-            </div>
-        </div>
-
-                <!-- 滑动指示器 -->
-                <div class="scroll-indicator mt-4">
-                    <div class="scroll-dots">
-                        {% for card in category_cards %}
-                        <span class="scroll-dot {{ 'active' if loop.first else '' }}"
-                              data-slide="{{ loop.index }}"
-                              data-category="{{ category.id }}"></span>
                         {% endfor %}
+                    </div>
+
+                    <!-- 滑动指示器 -->
+                    <div class="scroll-indicator mt-4">
+                        <div class="scroll-dots">
+                            {% for blog in blogs %}
+                            <span class="scroll-dot {{ 'active' if loop.first else '' }}"
+                                  data-slide="{{ loop.index }}"
+                                  data-category="blogs"></span>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- 查看更多链接 -->
             <div class="text-center mt-8">
-                <a href="blog/{{ category.id }}/{{ category.id }}.html"
+                <a href="blog/index.html"
                    class="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors">
                     <span>
                         {% if has_more %}
@@ -69,17 +55,8 @@
                     </span>
                     <i class="fa-solid fa-arrow-right ml-2"></i>
                 </a>
-        </div>
-            {% else %}
-            <div class="text-center py-12 bg-white rounded-xl shadow-sm">
-                <i class="fa-solid fa-book-open text-4xl text-gray-300 mb-4"></i>
-                <p class="text-apple-gray text-lg">该板块暂无代表性文章</p>
-                <p class="text-gray-500 text-sm mt-2">敬请期待精彩内容</p>
             </div>
-            {% endif %}
         </div>
-        {% endfor %}
-
     </div>
 </section>
 

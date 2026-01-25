@@ -45,8 +45,9 @@ def prepare_card_data(card_data, category_name, article_name):
 
     # 生成内容页面URL（相对于文章目录）
     card['content_url'] = f"content.html"
+    card['url'] = f"blog/{article_name}/content.html"
 
-    # 保存文章名称（用于分类页面）
+    # 保存文章名称
     card['article_name'] = article_name
 
     # 设置卡片类型
@@ -87,89 +88,81 @@ def scan_and_generate_blog():
     generated_cards = 0
     generated_articles = 0
 
-    # 扫描所有分类目录
-    for category_dir in data_root.iterdir():
-        if not category_dir.is_dir() or category_dir.name.startswith('.'):
+    # 直接扫描所有文章目录（扁平结构）
+    for article_dir in data_root.iterdir():
+        if not article_dir.is_dir() or article_dir.name.startswith('.'):
             continue
 
-        category_name = category_dir.name
-        print(f"📂 处理分类: {category_name}")
+        article_name = article_dir.name
+        card_file = article_dir / "card.json"
+        content_file = article_dir / "content.md"
 
-        # 扫描分类下的文章目录
-        for article_dir in category_dir.iterdir():
-            if not article_dir.is_dir():
-                continue
+        if not card_file.exists():
+            print(f"⚠️  跳过 {article_name}: 缺少 card.json")
+            continue
 
-            article_name = article_dir.name
-            card_file = article_dir / "card.json"
-            content_file = article_dir / "content.md"
+        print(f"📝 处理文章: {article_name}")
+        total_articles += 1
 
-            if not card_file.exists():
-                print(f"⚠️  跳过 {article_name}: 缺少 card.json")
-                continue
+        # 读取卡片配置
+        card_data = load_json_file(card_file)
+        if not card_data:
+            print(f"❌ 读取 {card_file} 失败")
+            continue
 
-            print(f"📝 处理文章: {article_name}")
-            total_articles += 1
+        # 准备卡片数据（传递空字符串作为category_name，因为现在是扁平结构）
+        prepared_card = prepare_card_data(card_data, "", article_name)
 
-            # 读取卡片配置
-            card_data = load_json_file(card_file)
-            if not card_data:
-                print(f"❌ 读取 {card_file} 失败")
-                continue
-
-            # 准备卡片数据
-            prepared_card = prepare_card_data(card_data, category_name, article_name)
-
-            # 读取并转换Markdown内容
-            md_content = ""
-            if content_file.exists():
-                try:
-                    with open(content_file, 'r', encoding='utf-8') as f:
-                        md_content = f.read()
-                except Exception as e:
-                    print(f"⚠️ 读取 {content_file} 失败: {e}")
-
-            # 转换Markdown为HTML
-            html_content = markdown_to_html(md_content)
-
-            # 创建输出目录
-            output_dir = output_root / category_name / article_name
-            output_dir.mkdir(parents=True, exist_ok=True)
-
+        # 读取并转换Markdown内容
+        md_content = ""
+        if content_file.exists():
             try:
-                # 生成卡片HTML
-                card_html = generate_card_html(prepared_card)
-                card_output = output_dir / "card.html"
-                with open(card_output, 'w', encoding='utf-8') as f:
-                    f.write(card_html)
-                generated_cards += 1
-                print(f"✅ 生成卡片: {card_output}")
-
-                # 生成文章HTML
-                article_html = generate_article_html(prepared_card, html_content)
-                article_output = output_dir / "content.html"
-                with open(article_output, 'w', encoding='utf-8') as f:
-                    f.write(article_html)
-                generated_articles += 1
-                print(f"✅ 生成文章: {article_output}")
-
-                # 如果图片是本地文件，则复制整个文章目录
-                if card_data.get('image') and not card_data['image'].startswith('http'):
-                    shutil.copytree(article_dir, output_dir, dirs_exist_ok=True)
-                    print(f"✅ 复制文章目录: {article_dir} → {output_dir}")
-                else:
-                    # 对于URL图片，只复制非图片文件
-                    for item in article_dir.iterdir():
-                        if item.is_file() and item.name != 'cover.png':
-                            shutil.copy2(item, output_dir)
-                    print(f"✅ 复制文章文件 (跳过URL图片): {article_dir} → {output_dir}")
-
+                with open(content_file, 'r', encoding='utf-8') as f:
+                    md_content = f.read()
             except Exception as e:
-                print(f"❌ 生成失败: {e}")
+                print(f"⚠️ 读取 {content_file} 失败: {e}")
 
-    # 生成分类页面
-    print("\n🏗️ 开始生成分类页面...")
-    generate_category_pages()
+        # 转换Markdown为HTML
+        html_content = markdown_to_html(md_content)
+
+        # 创建输出目录（直接在blog下，不再有分类层级）
+        output_dir = output_root / article_name
+        output_dir.mkdir(parents=True, exist_ok=True)
+
+        try:
+            # 生成卡片HTML
+            card_html = generate_card_html(prepared_card)
+            card_output = output_dir / "card.html"
+            with open(card_output, 'w', encoding='utf-8') as f:
+                f.write(card_html)
+            generated_cards += 1
+            print(f"✅ 生成卡片: {card_output}")
+
+            # 生成文章HTML
+            article_html = generate_article_html(prepared_card, html_content)
+            article_output = output_dir / "content.html"
+            with open(article_output, 'w', encoding='utf-8') as f:
+                f.write(article_html)
+            generated_articles += 1
+            print(f"✅ 生成文章: {article_output}")
+
+            # 如果图片是本地文件，则复制整个文章目录
+            if card_data.get('image') and not card_data['image'].startswith('http'):
+                shutil.copytree(article_dir, output_dir, dirs_exist_ok=True)
+                print(f"✅ 复制文章目录: {article_dir} → {output_dir}")
+            else:
+                # 对于URL图片，只复制非图片文件
+                for item in article_dir.iterdir():
+                    if item.is_file() and item.name != 'cover.png':
+                        shutil.copy2(item, output_dir)
+                print(f"✅ 复制文章文件 (跳过URL图片): {article_dir} → {output_dir}")
+
+        except Exception as e:
+            print(f"❌ 生成失败: {e}")
+
+    # 生成统一的博客列表页面
+    print("\n🏗️ 开始生成博客列表页面...")
+    generate_blog_list_page()
 
     # 输出统计信息
     print("\n📊 生成统计:")
@@ -178,26 +171,24 @@ def scan_and_generate_blog():
     print(f"   生成文章: {generated_articles}")
     print("🎉 博客生成完成！")
 
-def get_all_cards_for_category(category_id):
-    """获取指定分类下的所有文章卡片"""
+def get_all_blog_cards():
+    """获取所有博客文章卡片（扁平结构）"""
     root_dir = Path(__file__).parent.parent.parent.parent
-    blog_dir = root_dir / "data" / "blog" / category_id
+    blog_dir = root_dir / "data" / "blog"
 
     cards = []
 
     if blog_dir.exists():
-        # 扫描所有子目录（文章）
+        # 直接扫描所有文章目录
         for article_dir in blog_dir.iterdir():
-            if article_dir.is_dir():
+            if article_dir.is_dir() and not article_dir.name.startswith('.'):
                 card_file = article_dir / "card.json"
                 if card_file.exists():
                     card_data = load_json_file(card_file)
                     if card_data and card_data.get('status') == 'published':
-                        # 构建文章路径
-                        article_path = f"{category_id}/{article_dir.name}"
                         # 准备卡片数据
-                        prepared_card = prepare_card_data(card_data, category_id, article_dir.name)
-                        # 为分类页面添加文章名称
+                        prepared_card = prepare_card_data(card_data, "", article_dir.name)
+                        # 添加文章名称
                         prepared_card['article_name'] = article_dir.name
                         cards.append(prepared_card)
 
@@ -206,8 +197,8 @@ def get_all_cards_for_category(category_id):
 
     return cards
 
-def generate_category_pages():
-    """生成所有分类的完整页面"""
+def generate_blog_list_page():
+    """生成统一的博客列表页面（显示所有博客文章）"""
     # 设置模板环境
     env = setup_template_env()
 
@@ -215,57 +206,44 @@ def generate_category_pages():
     frame_file = Path(__file__).parent.parent.parent.parent / "data" / "blog" / "frame.json"
     frame_config = load_json_file(frame_file)
 
-    # 加载博客配置
-    blog_config_file = Path(__file__).parent.parent.parent.parent / "data" / "blog" / "title.json"
-    blog_config = load_json_file(blog_config_file)
-
-    if not frame_config or not blog_config:
-        print("❌ 无法加载框架或博客配置")
+    if not frame_config:
+        print("❌ 无法加载框架配置")
         return
+
+    # 获取所有博客文章
+    all_cards = get_all_blog_cards()
+
+    # 为博客列表页面调整图片路径
+    for card in all_cards:
+        if card.get('image') and not card['image'].startswith('http'):
+            if card['image'].startswith('./'):
+                image_name = card['image'][2:]  # 移除 ./
+                card['image'] = f"{card['article_name']}/{image_name}"
 
     template = env.get_template('sections/blog/all_content_page.html')
 
-    generated_pages = 0
+    # 准备模板数据
+    template_data = {
+        'frame': frame_config,
+        'category_name': '博客文章',
+        'category_description': '所有博客文章列表',
+        'category_icon': 'fa-blog',
+        'total_articles': len(all_cards),
+        'cards': all_cards
+    }
 
-    for category in blog_config.get('categories', []):
-        # 获取该分类的所有文章
-        category_cards = get_all_cards_for_category(category['id'])
+    # 生成HTML
+    html_content = template.render(**template_data)
 
-        # 为分类页面调整图片路径（相对于分类页面）
-        for card in category_cards:
-            if card.get('image') and not card['image'].startswith('http'):
-                if card['image'].startswith('./'):
-                    image_name = card['image'][2:]  # 移除 ./
-                    card['image'] = f"{card['article_name']}/{image_name}"
+    # 保存文件
+    output_dir = Path(__file__).parent.parent.parent.parent / "html" / "blog"
+    output_dir.mkdir(parents=True, exist_ok=True)
 
-        if not category_cards:
-            print(f"⚠️ 分类 '{category['name']}' 没有文章，跳过")
-            continue
+    output_file = output_dir / "index.html"
+    output_file.write_text(html_content, encoding='utf-8')
 
-        # 准备模板数据
-        template_data = {
-            'frame': frame_config,
-            'category_name': category['name'],
-            'category_description': category.get('description', ''),
-            'category_icon': category.get('icon', 'fa-folder'),
-            'total_articles': len(category_cards),
-            'cards': category_cards
-        }
-
-        # 生成HTML
-        html_content = template.render(**template_data)
-
-        # 保存文件
-        output_dir = Path(__file__).parent.parent.parent.parent / "html" / "blog" / category['id']
-        output_dir.mkdir(parents=True, exist_ok=True)
-
-        output_file = output_dir / f"{category['id']}.html"
-        output_file.write_text(html_content, encoding='utf-8')
-
-        print(f"✅ 生成分类页面: {category['name']} ({len(category_cards)}篇文章)")
-        generated_pages += 1
-
-    print(f"📊 分类页面生成完成: {generated_pages}个页面")
+    print(f"✅ 生成博客列表页面: 博客文章 ({len(all_cards)}篇文章)")
+    print("📊 博客列表页面生成完成！")
 
 def generate_blog_page():
     """生成博客页面并保存（如果需要的话）"""
