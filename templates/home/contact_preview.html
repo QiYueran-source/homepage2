@@ -50,11 +50,14 @@
                     </span>
                     {% elif contact.type == 'douyin' %}
                     {% if contact.value.endswith(('.png', '.jpg', '.jpeg', '.gif')) %}
+                    {% set image_path = contact.value.lstrip('./') %}
                     <div class="text-center">
-                        <img src="contact/{{ contact.value }}"
+                        <img src="contact/{{ image_path }}"
                              alt="抖音二维码"
-                             class="w-24 h-24 mx-auto rounded-lg shadow-sm">
-                        <p class="text-xs text-gray-500 mt-2">扫描关注抖音</p>
+                             class="w-24 h-24 mx-auto rounded-lg shadow-sm cursor-pointer hover:scale-110 transition-transform duration-300"
+                             onclick="openQRModal('contact/{{ image_path }}')"
+                             title="点击放大二维码">
+                        <p class="text-xs text-gray-500 mt-2">点击图片放大扫码</p>
                     </div>
                     {% else %}
                     <span class="text-gray-700 font-medium">{{ contact.value }}</span>
@@ -74,4 +77,63 @@
             {% endfor %}
         </div>
     </div>
+
+    <!-- 二维码放大模态框 -->
+    <div id="qrModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-75 backdrop-blur-sm transition-opacity duration-300" onclick="closeQRModal()">
+        <div class="relative max-w-2xl max-h-[90vh] p-4" onclick="event.stopPropagation()">
+            <!-- 关闭按钮 -->
+            <button onclick="closeQRModal()" 
+                    class="absolute -top-2 -right-2 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-colors z-10">
+                <i class="fa-solid fa-times text-xl"></i>
+            </button>
+            <!-- 放大的二维码图片 -->
+            <img id="qrModalImage" 
+                 src="" 
+                 alt="抖音二维码" 
+                 class="w-full h-auto rounded-lg shadow-2xl bg-white p-4 max-h-[80vh] object-contain">
+            <p class="text-white text-center mt-4 text-lg">扫描二维码关注抖音</p>
+        </div>
+    </div>
+
+    <style>
+        #qrModal {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        #qrModal.hidden {
+            animation: fadeOut 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+    </style>
+
+    <script>
+        function openQRModal(imageSrc) {
+            const modal = document.getElementById('qrModal');
+            const modalImage = document.getElementById('qrModalImage');
+            modalImage.src = imageSrc;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden'; // 防止背景滚动
+        }
+
+        function closeQRModal() {
+            const modal = document.getElementById('qrModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = ''; // 恢复滚动
+        }
+
+        // 按ESC键关闭模态框
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeQRModal();
+            }
+        });
+    </script>
 </section>

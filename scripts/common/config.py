@@ -104,7 +104,7 @@ def load_config():
                         href = "#resume"
                     elif section == "blog":
                         # 博客指向主页的博客预览部分
-                        href = "#blog-preview"
+                        href = "#blog"
                     elif section == "project":
                         # 项目指向主页的项目预览部分
                         href = "#projects"
