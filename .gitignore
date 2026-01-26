@@ -11,3 +11,6 @@ __pycache__/
 
 # html
 html/
+
+#其他文档 
+BLOG_REFACTOR_PLAN.md

@@ -1,5 +1,5 @@
 <!-- 博客预览区域 -->
-<section id="blog-preview" class="py-20 px-4 md:px-8 bg-apple-lightgray">
+<section id="blog" class="py-20 px-4 md:px-8 bg-apple-lightgray">
     <div class="container mx-auto">
         <h2 class="text-3xl md:text-4xl font-bold mb-16 text-center reveal-element">{{ title }}</h2>
 
@@ -18,7 +18,7 @@
 
             <!-- 移动端：横向滑动布局 -->
             <div class="md:hidden">
-                <div class="horizontal-scroll-container" data-category="blogs">
+                <div class="horizontal-scroll-container" data-category="blog">
                     <div class="horizontal-scroll-content">
                         {% for blog in blogs %}
                         {% set delay = loop.index * 200 %}
@@ -28,16 +28,16 @@
                         </div>
                         {% endfor %}
                     </div>
+                </div>
 
-                    <!-- 滑动指示器 -->
-                    <div class="scroll-indicator mt-4">
-                        <div class="scroll-dots">
-                            {% for blog in blogs %}
-                            <span class="scroll-dot {{ 'active' if loop.first else '' }}"
-                                  data-slide="{{ loop.index }}"
-                                  data-category="blogs"></span>
-                            {% endfor %}
-                        </div>
+                <!-- 滑动指示器 -->
+                <div class="scroll-indicator mt-4">
+                    <div class="scroll-dots">
+                        {% for blog in blogs %}
+                        <span class="scroll-dot {{ 'active' if loop.first else '' }}"
+                              data-slide="{{ loop.index }}"
+                              data-category="blog"></span>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -59,206 +59,4 @@
         </div>
     </div>
 </section>
-
-<!-- 横向滑动样式 -->
-<style>
-.horizontal-scroll-container {
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch; /* iOS流畅滚动 */
-    scrollbar-width: none; /* Firefox隐藏滚动条 */
-    -ms-overflow-style: none; /* IE隐藏滚动条 */
-    scroll-behavior: smooth;
-}
-
-.horizontal-scroll-container::-webkit-scrollbar {
-    display: none; /* Chrome隐藏滚动条 */
-}
-
-.horizontal-scroll-content {
-    display: flex;
-    gap: 1rem;
-    padding: 0 1rem;
-    min-width: max-content;
-}
-
-.horizontal-scroll-item {
-    flex: 0 0 280px; /* 固定宽度 */
-    max-width: 280px;
-}
-
-/* 滚动指示器 */
-.scroll-indicator {
-    display: flex;
-    justify-content: center;
-}
-
-.scroll-dots {
-    display: flex;
-    gap: 0.5rem;
-}
-
-.scroll-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: #e5e7eb;
-    transition: background-color 0.3s ease;
-    cursor: pointer;
-    flex-shrink: 0;
-}
-
-.scroll-dot.active {
-    background-color: #007aff;
-}
-
-/* 卡片在横向滑动时的样式调整 */
-.horizontal-scroll-item .card {
-    height: 100%;
-    margin: 0;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.horizontal-scroll-item .card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-}
-</style>
-
-<!-- 横向滑动JavaScript -->
-<script>
-// 横向滑动管理器
-class HorizontalScrollManager {
-    constructor() {
-        this.containers = new Map();
-        this.init();
-    }
-
-    init() {
-        this.attachScrollListeners();
-        this.attachDotListeners();
-        this.updateAllIndicators();
-    }
-
-    attachScrollListeners() {
-        document.querySelectorAll('.horizontal-scroll-container').forEach(container => {
-            const categoryId = container.dataset.category;
-            this.containers.set(categoryId, container);
-
-            // 监听滚动事件，更新指示器
-            container.addEventListener('scroll', () => {
-                this.updateActiveIndicator(categoryId);
-            }, { passive: true });
-
-            // 触摸结束时，自动对齐到最近的卡片
-            let isScrolling;
-            container.addEventListener('scroll', () => {
-                clearTimeout(isScrolling);
-                isScrolling = setTimeout(() => {
-                    this.snapToNearestCard(categoryId);
-                }, 100);
-            }, { passive: true });
-        });
-    }
-
-    attachDotListeners() {
-        document.querySelectorAll('.scroll-dot').forEach(dot => {
-            dot.addEventListener('click', (e) => {
-                const categoryId = e.target.dataset.category;
-                const slideIndex = parseInt(e.target.dataset.slide) - 1;
-                this.scrollToCard(categoryId, slideIndex);
-            });
-        });
-    }
-
-    updateActiveIndicator(categoryId) {
-        const container = this.containers.get(categoryId);
-        if (!container) return;
-
-        const content = container.querySelector('.horizontal-scroll-content');
-        const items = content.children;
-        const containerRect = container.getBoundingClientRect();
-        const containerCenter = containerRect.left + containerRect.width / 2;
-
-        let activeIndex = 0;
-        let minDistance = Infinity;
-
-        Array.from(items).forEach((item, index) => {
-            const itemRect = item.getBoundingClientRect();
-            const itemCenter = itemRect.left + itemRect.width / 2;
-            const distance = Math.abs(containerCenter - itemCenter);
-
-            if (distance < minDistance) {
-                minDistance = distance;
-                activeIndex = index;
-            }
-        });
-
-        // 更新指示器状态
-        const dots = document.querySelectorAll(`.scroll-dot[data-category="${categoryId}"]`);
-        dots.forEach((dot, index) => {
-            dot.classList.toggle('active', index === activeIndex);
-        });
-    }
-
-    updateAllIndicators() {
-        this.containers.forEach((container, categoryId) => {
-            this.updateActiveIndicator(categoryId);
-        });
-    }
-
-    snapToNearestCard(categoryId) {
-        const container = this.containers.get(categoryId);
-        if (!container) return;
-
-        const content = container.querySelector('.horizontal-scroll-content');
-        const items = content.children;
-        const containerRect = container.getBoundingClientRect();
-        const containerCenter = containerRect.left + containerRect.width / 2;
-
-        let nearestIndex = 0;
-        let minDistance = Infinity;
-
-        Array.from(items).forEach((item, index) => {
-            const itemRect = item.getBoundingClientRect();
-            const itemCenter = itemRect.left + itemRect.width / 2;
-            const distance = Math.abs(containerCenter - itemCenter);
-
-            if (distance < minDistance) {
-                minDistance = distance;
-                nearestIndex = index;
-            }
-        });
-
-        this.scrollToCard(categoryId, nearestIndex);
-    }
-
-    scrollToCard(categoryId, index) {
-        const container = this.containers.get(categoryId);
-        if (!container) return;
-
-        const content = container.querySelector('.horizontal-scroll-content');
-        const items = content.children;
-
-        if (items[index]) {
-            const item = items[index];
-            const containerRect = container.getBoundingClientRect();
-            const itemRect = item.getBoundingClientRect();
-
-            const scrollLeft = container.scrollLeft + (itemRect.left - containerRect.left) - (containerRect.width - itemRect.width) / 2;
-
-            container.scrollTo({
-                left: scrollLeft,
-                behavior: 'smooth'
-            });
-        }
-    }
-}
-
-// 初始化横向滑动管理器
-document.addEventListener('DOMContentLoaded', function() {
-    new HorizontalScrollManager();
-});
-</script>
 

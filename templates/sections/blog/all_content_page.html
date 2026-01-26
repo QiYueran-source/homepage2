@@ -74,10 +74,6 @@
             font-size: 2.5rem;
             font-weight: bold;
             margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
         }
 
         .page-description {
@@ -230,8 +226,6 @@
 
             .page-main-title {
                 font-size: 2rem;
-                flex-direction: column;
-                gap: 0.5rem;
             }
 
             .article-header,
@@ -265,45 +259,52 @@
     <!-- 页面标题区域 -->
     <header class="page-header">
         <div class="container">
-            <h1 class="page-main-title">博客文章</h1>
-            <p class="page-description">记录技术学习、生活感悟与投资思考</p>
+            <h1 class="page-main-title">个人博客</h1>
+            <p class="page-description">分享技术思考和生活感悟</p>
             <div class="page-stats">
-                <span>共 {{ total_articles }} 篇文章</span>
+                <span>共 {{ total_blogs }} 篇文章</span>
             </div>
         </div>
     </header>
 
-    <!-- 文章列表 -->
+    <!-- 博客列表 -->
     <main class="articles-list">
         <div class="container">
-            {% for card in cards %}
+            {% for blog in blogs %}
             <article class="article-item">
                 <div class="article-header">
                     <h2 class="article-title">
-                        <a href="{{ card.article_name }}/content.html">{{ card.title }}</a>
+                        <a href="{{ blog.blog_path }}/content.html">{{ blog.title }}</a>
                     </h2>
                     <div class="article-meta">
-                        <time class="article-date">{{ card.date }}</time>
-                        {% if card.tags %}
+                        <time class="article-date">{{ blog.date }}</time>
+                        {% if blog.tags %}
                         <div class="article-tags">
-                            {% for tag in card.tags %}
+                            {% for tag in blog.tags[:3] %}
                             <span class="tag">{{ tag }}</span>
                             {% endfor %}
+                            {% if blog.tags|length > 3 %}
+                            <span class="tag">+{{ blog.tags|length - 3 }}</span>
+                            {% endif %}
                         </div>
                         {% endif %}
                     </div>
                 </div>
 
-                {% if card.image %}
+                {% if blog.image %}
                 <div class="article-image">
-                    <img src="{{ card.image }}" alt="{{ card.title }}" loading="lazy">
+                    {% if blog.image.startswith('http') %}
+                    <img src="{{ blog.image }}" alt="{{ blog.title }}" loading="lazy">
+                    {% else %}
+                    <img src="{{ blog.blog_path }}/{{ blog.image }}" alt="{{ blog.title }}" loading="lazy">
+                    {% endif %}
                 </div>
                 {% endif %}
 
                 <div class="article-content">
-                    <p class="article-summary">{{ card.summary }}</p>
-                    <a href="{{ card.article_name }}/content.html" class="read-more">
-                        阅读全文 <i class="fa-solid fa-arrow-right"></i>
+                    <p class="article-summary">{{ blog.summary }}</p>
+                    <a href="{{ blog.blog_path }}/content.html" class="read-more">
+                        查看详情 <i class="fa-solid fa-arrow-right"></i>
                     </a>
                 </div>
             </article>
@@ -320,3 +321,4 @@
     </footer>
 </body>
 </html>
+

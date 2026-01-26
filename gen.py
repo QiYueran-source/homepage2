@@ -80,7 +80,7 @@ def main():
     tasks = {
         "home": "scripts.home.generator.generate_home_html",
         "resume": "scripts.sections.resume.generator.generate_resume_page",
-        "blog": "scripts.sections.blog.generator.scan_and_generate_blog_and_home",
+        "blog": "scripts.sections.blog.generator.scan_and_generate_blogs_and_home",
         "project": "scripts.sections.project.generator.scan_and_generate_projects_and_home",
         "docs": "scripts.sections.docs.generator.generate_docs_page_and_home",
         "stack": "scripts.sections.stack.generator.generate_stack_page_and_home",

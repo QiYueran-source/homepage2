@@ -73,8 +73,8 @@ def generate_home_html():
     resume_preview_html = generate_resume_preview_html()
 
     # 调用博客预览模块
-    from .blog_preview import generate_blog_preview_html
-    blog_preview_html = generate_blog_preview_html()
+    from scripts.sections.blog.generator import generate_blogs_preview_html
+    blog_preview_html = generate_blogs_preview_html()
 
     # 调用项目预览模块
     from scripts.sections.project.generator import generate_projects_preview_html
