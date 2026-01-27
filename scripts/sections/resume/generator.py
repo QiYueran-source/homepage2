@@ -6,6 +6,7 @@
 """
 
 from pathlib import Path
+import shutil
 from jinja2 import Environment, FileSystemLoader
 
 def setup_template_env():
@@ -26,7 +27,7 @@ def load_resume_config():
 
     # 确保PDF路径正确
     if 'pdf_path' not in frame_config:
-        frame_config['pdf_path'] = 'data/resume/resume.pdf'
+        frame_config['pdf_path'] = 'resume.pdf'
 
     return frame_config
 
@@ -99,11 +100,12 @@ def generate_resume_footer_html(env, config):
 
 def generate_resume_page():
     """生成简历页面并保存到文件"""
+    root_dir = Path(__file__).parent.parent.parent.parent
+    
     # 生成HTML内容
     html_content = generate_resume_page_html()
 
     # 保存到文件 - 生成到 html/resume/index.html
-    root_dir = Path(__file__).parent.parent.parent.parent
     output_dir = root_dir / "html" / "resume"
     output_file = output_dir / "index.html"
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -112,6 +114,16 @@ def generate_resume_page():
         f.write(html_content)
 
     print(f"简历页面 HTML 已生成: {output_file}")
+    
+    # 复制PDF文件到html/resume/目录
+    pdf_source = root_dir / "data" / "resume" / "resume.pdf"
+    pdf_target = output_dir / "resume.pdf"
+    
+    if pdf_source.exists():
+        shutil.copy2(pdf_source, pdf_target)
+        print(f"✅ 简历PDF已复制: {pdf_source} → {pdf_target}")
+    else:
+        print(f"⚠️ 警告: 简历PDF文件不存在: {pdf_source}")
 
 if __name__ == "__main__":
     generate_resume_page()
