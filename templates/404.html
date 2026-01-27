@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - 页面未找到</title>
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome图标 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- 自定义Tailwind配置（苹果官网配色） -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        apple: {
+                            black: '#1D1D1F',
+                            white: '#FFFFFF',
+                            gray: '#86868B',
+                            lightgray: '#F5F5F7',
+                            hover: '#0071E3',
+                            gradient: '#E8E8ED'
+                        }
+                    },
+                    fontFamily: {
+                        sf: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif']
+                    },
+                    backgroundImage: {
+                        'apple-gradient': 'linear-gradient(180deg, #F5F5F7 0%, #E8E8ED 100%)'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="font-sf bg-apple-lightgray text-apple-black min-h-screen flex items-center justify-center bg-apple-gradient">
+    <div class="text-center px-4">
+        <div class="mb-8">
+            <h1 class="text-9xl font-bold text-apple-black mb-4">404</h1>
+            <h2 class="text-3xl font-semibold text-apple-black mb-4">页面未找到</h2>
+            <p class="text-apple-gray text-lg mb-8">抱歉，您访问的页面不存在或已被移除。</p>
+        </div>
+        
+        <div class="space-x-4">
+            <a href="/home.html" 
+               class="inline-flex items-center px-6 py-3 bg-apple-hover text-apple-white rounded-lg hover:bg-[#0077ED] transition-all">
+                <i class="fa-solid fa-home mr-2"></i>
+                返回首页
+            </a>
+            <button onclick="history.back()" 
+                    class="inline-flex items-center px-6 py-3 bg-apple-gray text-apple-white rounded-lg hover:bg-[#4B5563] transition-all">
+                <i class="fa-solid fa-arrow-left mr-2"></i>
+                返回上一页
+            </button>
+        </div>
+    </div>
+</body>
+</html>

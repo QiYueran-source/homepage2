@@ -85,13 +85,14 @@ def main():
         "docs": "scripts.sections.docs.generator.generate_docs_page_and_home",
         "stack": "scripts.sections.stack.generator.generate_stack_page_and_home",
         "contact": "scripts.sections.contact.generator.generate_contact_page_and_home",
+        "error": "scripts.common.error_pages.generate_error_pages",
     }
 
     # 处理默认值和验证
     targets = args.targets if args.targets else ["all"]
 
     # 验证参数
-    valid_targets = ["home", "resume", "blog", "project", "docs", "stack", "contact", "all"]
+    valid_targets = ["home", "resume", "blog", "project", "docs", "stack", "contact", "error", "all"]
     for target in targets:
         if target not in valid_targets:
             parser.error(f"无效选择: '{target}' (选择: {', '.join(valid_targets)})")
