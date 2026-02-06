@@ -1,6 +1,6 @@
 {
     "nav_title": "个人简历",
-    "page_title": "个人简历 - 齐悦然",
+    "page_title": "个人简历 - X",
     "nav_buttons": [
         {"text": "下载简历", "href": "resume.pdf", "icon": "fa-download", "class": "download-btn", "download": "resume.pdf"},
         {"text": "返回首页", "href": "../home.html", "icon": "fa-arrow-left", "class": "back-btn"}

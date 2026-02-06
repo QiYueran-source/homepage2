@@ -4,7 +4,7 @@
     "summary": "基于机器学习的协同效应预测分析平台，为企业并购和战略决策提供数据支持",
     "technologies": ["Python", "TensorFlow", "Pandas", "Scikit-learn", "Flask"],
     "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-    "github_url": "https://github.com/username/synergy-analysis",
+    "github_url": "https://github.com/xxx/repo",
     "demo_url": "https://synergy-analysis.example.com",
     "status": "completed",
     "date": "2024-12",

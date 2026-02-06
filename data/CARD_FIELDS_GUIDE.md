@@ -142,8 +142,8 @@ data/project/
     "summary": "基于多agent强化学习的预期协同效应分析研究，以及相应研究系统",
     "technologies": ["Python", "PyTorch", "SB3", "Docker", "数据流水线"],
     "image": "./封面.png",
-    "github_url": "https://github.com/QiYueran-source/GraduationThesis.git",
-    "demo_url": "https://github.com/QiYueran-source/GraduationThesis.git",
+    "github_url": "https://github.com/xxx/repo.git",
+    "demo_url": "https://github.com/xxx/repo.git",
     "status": "completed",
     "date": "2024-12",
     "category": "金融深度学习"

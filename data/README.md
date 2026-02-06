@@ -47,7 +47,7 @@ data中保存了网页中的静态内容，仅需要修改对应的文件，就�
 ## 4.声明  
 ### MIT许可证
 
-**版权所有 (c) 2026 Qi Yueran**
+**版权所有 (c) 2026 X**
 
 特此免费授予任何获得本软件副本和相关文档文件（"软件"）的人不受限制地处理软件的权利，包括但不限于使用、复制、修改、合并、发布、分发、再许可和/或销售软件副本的权利，并允许向其提供软件的人这样做，但须符合以下条件：
 
@@ -66,8 +66,8 @@ data中保存了网页中的静态内容，仅需要修改对应的文件，就�
 
 欢迎提交Issue和Pull Request来改进项目。如有问题或建议，请通过以下方式联系：
 
-- 📧 **邮箱**: 1206585163@qq.com  
-- 🐙 **GitHub**: [https://github.com/QiYueran-source/homepage2](https://github.com/QiYueran-source/homepage2)
+- 📧 **邮箱**: xxx@xx.com  
+- 🐙 **GitHub**: [https://github.com/xxx/homepage2](https://github.com/xxx/homepage2)
 
 ---
 
