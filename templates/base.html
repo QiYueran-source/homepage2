@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ site_title }}</title>
+    <!-- CDN 预连接，加快首屏资源加载 -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
     <!-- 引入Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- 引入Font Awesome图标 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- 引入ScrollReveal实现苹果风格滚动渐显动画 -->
-    <script src="https://unpkg.com/scrollreveal@4.0.9/dist/scrollreveal.min.js"></script>
 
     <!-- 自定义Tailwind配置（苹果官网配色+新增渐变） -->
     <script>
@@ -97,6 +99,8 @@
     <!-- 页脚 -->
     {{ footer_html|safe }}
 
+    <!-- ScrollReveal 延后加载，不阻塞首屏 -->
+    <script src="https://unpkg.com/scrollreveal@4.0.9/dist/scrollreveal.min.js" defer></script>
     <!-- JavaScript交互逻辑（苹果风格动画+功能） -->
     <script>
         // 1. 导航栏滚动磨砂效果
@@ -135,17 +139,20 @@
             });
         });
 
-        // 4. 苹果风格滚动渐显动画配置
-        ScrollReveal({
-            origin: 'bottom',
-            distance: '20px',
-            duration: 800,
-            easing: 'cubic-bezier(0.25, 0.8, 0.25, 1)',
-            reset: false,
-            viewFactor: 0.1
+        // 4. 苹果风格滚动渐显动画（等 ScrollReveal 加载后执行）
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof ScrollReveal !== 'undefined') {
+                ScrollReveal({
+                    origin: 'bottom',
+                    distance: '20px',
+                    duration: 800,
+                    easing: 'cubic-bezier(0.25, 0.8, 0.25, 1)',
+                    reset: false,
+                    viewFactor: 0.1
+                });
+                ScrollReveal().reveal('.reveal-element');
+            }
         });
-        // 初始化所有带reveal-element类的元素
-        ScrollReveal().reveal('.reveal-element');
     </script>
 </body>
 </html>
