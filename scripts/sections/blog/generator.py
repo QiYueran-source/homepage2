@@ -199,6 +199,13 @@ def scan_and_generate_blogs():
 
                 html_content = markdown_to_html(md_content)
 
+                # 检测同目录下背景图（background.png/jpg/webp），供正文页使用
+                for ext in ('png', 'jpg', 'webp'):
+                    bg = blog_dir / f'background.{ext}'
+                    if bg.exists():
+                        prepared_card['background_url'] = f'background.{ext}'
+                        break
+
                 # 生成博客HTML
                 blog_html = generate_blog_html(prepared_card, html_content)
                 blog_output = output_dir / "content.html"

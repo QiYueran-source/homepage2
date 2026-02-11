@@ -158,9 +158,11 @@
             color: #666;
             font-style: italic;
         }
+        /* 有整页背景时，标题区与正文区、底部灰条共用同一灰底色号 */
+        .article-overlay-gray { background-color: #e5e7eb; }
     </style>
 </head>
-<body class="font-sf bg-apple-lightgray text-apple-black">
+<body class="font-sf text-apple-black {% if not card.background_url %}bg-apple-lightgray{% endif %}" {% if card.background_url %}style="background-image: linear-gradient(rgba(255,255,255,0.78), rgba(255,255,255,0.78)), url('{{ card.background_url }}'); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed; min-height: 100%;"{% endif %}>
     <!-- 导航栏 -->
     <nav class="bg-white shadow-sm sticky top-0 z-50">
         <div class="container mx-auto px-4 md:px-8 py-4">
@@ -195,49 +197,88 @@
     </nav>
 
     <!-- 文章容器 -->
-    <div class="container mx-auto px-4 md:px-8 py-8 max-w-4xl">
+    <div class="container mx-auto px-4 md:px-8 py-8 max-w-[960px]">
 
-        <!-- 文章头部 -->
-        <header class="mb-8">
-            <!-- 分类和日期 -->
-            <div class="flex items-center gap-4 text-sm text-apple-gray mb-4">
-                <span class="bg-apple-lightgray px-3 py-1 rounded-full">{{ card.category }}</span>
-                <span>{{ card.date }}</span>
-                {% if card.read_time %}
-                <span><i class="fa-solid fa-clock mr-1"></i>{{ card.read_time }} 分钟阅读</span>
+        {% if card.background_url %}
+        <!-- 有整页背景时：标题+正文统一一块灰底 -->
+        <div class="article-overlay-gray rounded-xl shadow-sm overflow-hidden">
+            <header class="px-6 pt-6 pb-4 md:px-12 md:pt-8 md:pb-6 text-center">
+                <div class="max-w-2xl mx-auto">
+                    <div class="flex items-center justify-center gap-4 text-sm text-apple-gray mb-4 flex-wrap">
+                        <span class="bg-white/80 px-3 py-1 rounded-full">{{ card.category }}</span>
+                        <span>{{ card.date }}</span>
+                        {% if card.read_time %}
+                        <span><i class="fa-solid fa-clock mr-1"></i>{{ card.read_time }} 分钟阅读</span>
+                        {% endif %}
+                    </div>
+                    <h1 class="text-3xl md:text-4xl font-bold text-apple-black mb-4 leading-tight">
+                        {{ card.title }}
+                    </h1>
+                    {% if card.summary %}
+                    <p class="text-lg text-apple-gray leading-relaxed">
+                        {{ card.summary }}
+                    </p>
+                    {% endif %}
+                    {% if card.tags %}
+                    <div class="flex flex-wrap gap-2 mt-4 justify-center">
+                        {% for tag in card.tags %}
+                        <span class="bg-white/80 text-apple-gray text-sm px-3 py-1 rounded-full">
+                            <i class="fa-solid fa-tag mr-1"></i>{{ tag }}
+                        </span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </header>
+            <article class="article-content px-6 pb-8 md:px-12 md:pb-12 border-t border-gray-300/50">
+                <div class="max-w-xl mx-auto">
+                    {{ content_html|safe }}
+                </div>
+            </article>
+        </div>
+        {% else %}
+        <!-- 无整页背景时：保持原结构 -->
+        <header class="mb-8 text-center">
+            <div class="max-w-2xl mx-auto">
+                <div class="flex items-center justify-center gap-4 text-sm text-apple-gray mb-4 flex-wrap">
+                    <span class="bg-apple-lightgray px-3 py-1 rounded-full">{{ card.category }}</span>
+                    <span>{{ card.date }}</span>
+                    {% if card.read_time %}
+                    <span><i class="fa-solid fa-clock mr-1"></i>{{ card.read_time }} 分钟阅读</span>
+                    {% endif %}
+                </div>
+                <h1 class="text-3xl md:text-4xl font-bold text-apple-black mb-4 leading-tight">
+                    {{ card.title }}
+                </h1>
+                {% if card.summary %}
+                <p class="text-lg text-apple-gray leading-relaxed">
+                    {{ card.summary }}
+                </p>
+                {% endif %}
+                {% if card.tags %}
+                <div class="flex flex-wrap gap-2 mt-4 justify-center">
+                    {% for tag in card.tags %}
+                    <span class="bg-apple-lightgray text-apple-gray text-sm px-3 py-1 rounded-full">
+                        <i class="fa-solid fa-tag mr-1"></i>{{ tag }}
+                    </span>
+                    {% endfor %}
+                </div>
                 {% endif %}
             </div>
-
-            <!-- 文章标题 -->
-            <h1 class="text-3xl md:text-4xl font-bold text-apple-black mb-4 leading-tight">
-                {{ card.title }}
-            </h1>
-
-            <!-- 文章摘要 -->
-            {% if card.summary %}
-            <p class="text-lg text-apple-gray leading-relaxed">
-                {{ card.summary }}
-            </p>
-            {% endif %}
-
-            <!-- 标签 -->
-            {% if card.tags %}
-            <div class="flex flex-wrap gap-2 mt-4">
-                {% for tag in card.tags %}
-                <span class="bg-apple-lightgray text-apple-gray text-sm px-3 py-1 rounded-full">
-                    <i class="fa-solid fa-tag mr-1"></i>{{ tag }}
-                </span>
-                {% endfor %}
-            </div>
-            {% endif %}
         </header>
-
-        <!-- 文章内容 -->
-        <article class="bg-gray-50 rounded-xl shadow-sm p-8 md:p-12 article-content">
-            {{ content_html|safe }}
+        <article class="bg-white rounded-xl shadow-sm p-8 md:p-12 article-content">
+            <div class="max-w-xl mx-auto">
+                {{ content_html|safe }}
+            </div>
         </article>
+        {% endif %}
 
     </div>
+
+    {% if card.background_url %}
+    <!-- 正文底部灰条，盖在背景图上（与标题区、正文区同色号） -->
+    <div class="article-overlay-gray w-full min-h-[160px] mt-8" aria-hidden="true"></div>
+    {% endif %}
 
     <!-- JavaScript（等 defer 脚本加载后执行） -->
     <script>

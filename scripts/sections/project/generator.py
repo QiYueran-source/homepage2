@@ -201,6 +201,13 @@ def scan_and_generate_projects():
 
                 html_content = markdown_to_html(md_content)
 
+                # 检测同目录下背景图（background.png/jpg/webp），供正文页使用
+                for ext in ('png', 'jpg', 'webp'):
+                    bg = project_dir / f'background.{ext}'
+                    if bg.exists():
+                        prepared_card['background_url'] = f'background.{ext}'
+                        break
+
                 # 生成项目HTML
                 project_html = generate_project_html(prepared_card, html_content)
                 project_output = output_dir / "content.html"
