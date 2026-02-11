@@ -159,7 +159,7 @@
             font-style: italic;
         }
         /* 有整页背景时，标题区与正文区、底部灰条共用同一灰底色号 */
-        .article-overlay-gray { background-color: #e5e7eb; }
+        .article-overlay-gray { background-color: #f4f4f6; }
     </style>
 </head>
 <body class="font-sf text-apple-black {% if not card.background_url %}bg-apple-lightgray{% endif %}" {% if card.background_url %}style="background-image: linear-gradient(rgba(255,255,255,0.78), rgba(255,255,255,0.78)), url('{{ card.background_url }}'); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed; min-height: 100%;"{% endif %}>
@@ -197,7 +197,7 @@
     </nav>
 
     <!-- 文章容器 -->
-    <div class="container mx-auto px-4 md:px-8 py-8 max-w-[960px]">
+    <div class="container mx-auto px-4 md:px-8 py-8 max-w-[820px]">
 
         {% if card.background_url %}
         <!-- 有整页背景时：标题+正文统一一块灰底 -->
