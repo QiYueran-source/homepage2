@@ -197,11 +197,11 @@
     </nav>
 
     <!-- 文章容器 -->
-    <div class="container mx-auto px-4 md:px-8 py-8 max-w-[820px]">
+    <div class="container mx-auto px-4 md:px-8 py-8 max-w-[960px]">
 
         {% if card.background_url %}
         <!-- 有整页背景时：标题+正文统一一块灰底 -->
-        <div class="article-overlay-gray rounded-xl shadow-sm overflow-hidden">
+        <div class="article-overlay-gray rounded-xl shadow-sm overflow-hidden border-l-8 border-r-8 border-gray-200">
             <header class="px-6 pt-6 pb-4 md:px-12 md:pt-8 md:pb-6 text-center">
                 <div class="max-w-2xl mx-auto">
                     <div class="flex items-center justify-center gap-4 text-sm text-apple-gray mb-4 flex-wrap">
@@ -231,7 +231,7 @@
                 </div>
             </header>
             <article class="article-content px-6 pb-8 md:px-12 md:pb-12 border-t border-gray-300/50">
-                <div class="max-w-xl mx-auto">
+                <div class="max-w-2xl mx-auto">
                     {{ content_html|safe }}
                 </div>
             </article>
@@ -266,8 +266,8 @@
                 {% endif %}
             </div>
         </header>
-        <article class="bg-white rounded-xl shadow-sm p-8 md:p-12 article-content">
-            <div class="max-w-xl mx-auto">
+        <article class="bg-white rounded-xl shadow-sm p-8 md:p-12 article-content border-l-8 border-r-8 border-gray-200">
+            <div class="max-w-2xl mx-auto">
                 {{ content_html|safe }}
             </div>
         </article>
