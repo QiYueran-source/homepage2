@@ -14,3 +14,7 @@ html/
 
 #其他文档 
 BLOG_REFACTOR_PLAN.md
+
+# 开发容器构建文件
+.devcontainer/
+Dockerfile.dev  

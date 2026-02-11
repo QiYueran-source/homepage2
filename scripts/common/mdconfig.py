@@ -46,7 +46,7 @@ def get_markdown_config():
         'pymdownx.highlight': {
             'use_pygments': True,
             'noclasses': False,
-            'pygments_style': 'default',
+            'pygments_style': 'monokai',
             'css_class': 'highlight'
         }
     }

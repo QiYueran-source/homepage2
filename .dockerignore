@@ -29,3 +29,7 @@ Thumbs.db
 # 开发文档
 README.md
 docs/
+
+# 开发容器构建文件
+.devcontainer/
+Dockerfile.dev

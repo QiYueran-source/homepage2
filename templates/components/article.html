@@ -105,6 +105,52 @@
             overflow-x: auto;
             margin: 1rem 0;
         }
+        /* 代码块：黑底 + Monokai 语法高亮（仅作用于 .highlight 块） */
+        .article-content .highlight {
+            background: #272822;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            margin: 1rem 0;
+            position: relative;
+            padding-top: 2rem;
+        }
+        .article-content .highlight pre {
+            background: transparent;
+            color: #f8f8f2;
+            padding: 1rem 1.5rem;
+            margin: 0;
+            border: none;
+            user-select: text;
+        }
+        .article-content .highlight code {
+            background: transparent;
+            color: inherit;
+            padding: 0;
+            user-select: text;
+        }
+        .article-content .highlight .code-lang {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.75rem;
+            color: #75715e;
+            background: rgba(0,0,0,0.3);
+            border-radius: 0 0.5rem 0 0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        /* Monokai token 颜色 */
+        .article-content .highlight .c { color: #75715e; font-style: italic }
+        .article-content .highlight .k { color: #66d9ef }
+        .article-content .highlight .kc,.article-content .highlight .kd,.article-content .highlight .kn,.article-content .highlight .kp,.article-content .highlight .kr,.article-content .highlight .kt { color: #66d9ef }
+        .article-content .highlight .s,.article-content .highlight .s1,.article-content .highlight .s2,.article-content .highlight .sb,.article-content .highlight .sc,.article-content .highlight .sd,.article-content .highlight .se,.article-content .highlight .sh,.article-content .highlight .si,.article-content .highlight .sx { color: #e6db74 }
+        .article-content .highlight .nf,.article-content .highlight .nn,.article-content .highlight .na { color: #a6e22e }
+        .article-content .highlight .nb { color: #66d9ef }
+        .article-content .highlight .m,.article-content .highlight .mi,.article-content .highlight .mf,.article-content .highlight .mb,.article-content .highlight .mh,.article-content .highlight .il { color: #ae81ff }
+        .article-content .highlight .o,.article-content .highlight .ow { color: #f92672 }
+        .article-content .highlight .p { color: #f8f8f2 }
+        .article-content .highlight .nb,.article-content .highlight .nc,.article-content .highlight .no,.article-content .highlight .nd,.article-content .highlight .ni,.article-content .highlight .ne,.article-content .highlight .nl,.article-content .highlight .nt,.article-content .highlight .nv,.article-content .highlight .vc,.article-content .highlight .vg,.article-content .highlight .vi,.article-content .highlight .vm { color: #f8f8f2 }
         .article-content blockquote {
             border-left: 4px solid #0071E3;
             padding-left: 1rem;
@@ -130,9 +176,9 @@
 
                 <div class="flex items-center space-x-4">
                     {% if card.type == 'blog' %}
-                    <a href="../{{ card.category }}.html" class="text-apple-hover hover:text-[#0077ED] flex items-center transition-colors">
+                    <a href="../index.html" class="text-apple-hover hover:text-[#0077ED] flex items-center transition-colors">
                         <i class="fa-solid fa-arrow-left mr-2"></i>
-                        {{ card.category }}
+                        返回博客
                     </a>
                     {% else %}
                     <a href="../index.html" class="text-apple-hover hover:text-[#0077ED] flex items-center transition-colors">
@@ -187,7 +233,7 @@
         </header>
 
         <!-- 文章内容 -->
-        <article class="bg-white rounded-xl shadow-sm p-8 md:p-12 article-content">
+        <article class="bg-gray-50 rounded-xl shadow-sm p-8 md:p-12 article-content">
             {{ content_html|safe }}
         </article>
 
@@ -202,6 +248,24 @@
             if (typeof mermaid !== 'undefined') {
                 mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
             }
+            // 为代码块添加语言标签（如 ```python → 显示 python）
+            document.querySelectorAll('.article-content .highlight').forEach(function(block) {
+                var code = block.querySelector('pre code');
+                if (!code) return;
+                var lang = '';
+                for (var i = 0; i < code.classList.length; i++) {
+                    if (code.classList[i].indexOf('language-') === 0) {
+                        lang = code.classList[i].replace('language-', '');
+                        break;
+                    }
+                }
+                if (lang) {
+                    var label = document.createElement('span');
+                    label.className = 'code-lang';
+                    label.textContent = lang.toLowerCase();
+                    block.insertBefore(label, block.firstChild);
+                }
+            });
         });
         // 平滑滚动
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
