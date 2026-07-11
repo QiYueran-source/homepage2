@@ -4,12 +4,17 @@ services:
   homepage:
     build: .
     ports:
-      - "${SERVER_PORT}:${NGINX_PORT}"
+      - "${SERVER_PORT}:83"
     restart: unless-stopped
+    volumes:
+      # 挂载数据目录，只读即可
+      - ./data:/app/data:ro
+      # 挂载生成的 html 目录，持久化并便于调试
+      - ./html:/app/html
     environment:
-        - PYTHONPATH=/app
+      - PYTHONPATH=/app
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:${SERVER_PORT}/"]
+      test: ["CMD", "curl", "-f", "http://localhost:83/"]
       interval: 30s
       timeout: 10s
       retries: 3

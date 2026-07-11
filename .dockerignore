@@ -18,6 +18,9 @@ venv
 *.swp
 *.swo
 
+# 生成的静态文件（运行时会从挂载的 data 重新生成）
+html/
+
 # 操作系统文件
 .DS_Store
 Thumbs.db
